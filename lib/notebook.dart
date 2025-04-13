@@ -36,8 +36,10 @@ class _NotebookPageState extends State<NotebookPage> {
         itemBuilder: (context, index) {
           final item = items[index];
           return Container(
-            padding: EdgeInsets.symmetric(vertical: 2,horizontal: 4),
-            decoration:BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black, width: 2)),),
+            padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+            decoration: BoxDecoration(
+              border: Border(bottom: BorderSide(color: Colors.black, width: 2)),
+            ),
             child: ListTile(
               title: Text(item['title'] ?? 'Title'),
               leading: const Icon(LucideIcons.zap),
@@ -46,7 +48,11 @@ class _NotebookPageState extends State<NotebookPage> {
             ),
           );
         },
-       
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        tooltip: 'New Task',
+        child: Icon(LucideIcons.plus),
       ),
     );
   }

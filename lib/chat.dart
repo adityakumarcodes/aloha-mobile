@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
@@ -12,7 +13,12 @@ class ChatPage extends StatelessWidget {
         elevation: 2,
         shape: Border(bottom: BorderSide(color: Colors.black, width: 2)),
       ),
-      body: const Placeholder(),
+      body: Placeholder(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        tooltip: 'New chat',
+        child: Icon(LucideIcons.messageSquarePlus),
+      ),
     );
   }
 }

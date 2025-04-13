@@ -16,6 +16,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        title: Text('Home'),
+        centerTitle: true,
         elevation: 2,
         shape: Border(bottom: BorderSide(color: Colors.black, width: 2)),
       ),
@@ -34,17 +36,34 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               leading: Icon(LucideIcons.bookOpen),
               title: Text('Notebook'),
-              onTap: () => context.push('/notebook'),
+              onTap: () {
+                Navigator.of(context).pop();
+                context.push('/notebook');
+              },
             ),
             ListTile(
               leading: Icon(LucideIcons.messageSquare),
               title: Text('Chat'),
-              onTap: () => context.push('/chat'),
+              onTap: () {
+                Navigator.of(context).pop();
+                context.push('/chat');
+              },
             ),
             ListTile(
               leading: Icon(LucideIcons.pyramid),
               title: Text('Social'),
-              onTap: () => context.push('/social'),
+              onTap: () {
+                Navigator.of(context).pop();
+                context.push('/social');
+              },
+            ),
+            ListTile(
+              leading: Icon(LucideIcons.bolt),
+              title: Text('Settings'),
+              onTap: () {
+                Navigator.of(context).pop();
+                context.push('/settings');
+              },
             ),
           ],
         ),
