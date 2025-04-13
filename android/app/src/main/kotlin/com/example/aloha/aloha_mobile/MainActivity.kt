@@ -1,0 +1,5 @@
+package com.example.aloha.aloha_mobile
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity : FlutterActivity()
