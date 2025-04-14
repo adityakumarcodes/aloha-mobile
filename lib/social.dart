@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 
-class SocialPage extends StatelessWidget {
+class SocialPage extends StatefulWidget {
   const SocialPage({super.key});
 
+  @override
+  State<SocialPage> createState() => _SocialPageState();
+}
+
+class _SocialPageState extends State<SocialPage> {
+  int? _value = 0;
+  List<String> chipList = ['Feed', 'News', 'Jobs'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +19,30 @@ class SocialPage extends StatelessWidget {
         elevation: 2,
         shape: Border(bottom: BorderSide(color: Colors.black, width: 2)),
       ),
-      body: const Placeholder(),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Wrap(
+              spacing: 5.0,
+              children:
+                  List<Widget>.generate(
+                    3,
+                    (int index) => ChoiceChip.elevated(
+                      label: Text(chipList[index]),
+                      selected: _value == index,
+                      onSelected: (bool selected) {
+                        setState(() {
+                          _value = selected ? index : null;
+                        });
+                      },
+                    ),
+                  ).toList(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

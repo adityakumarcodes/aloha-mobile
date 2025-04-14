@@ -9,6 +9,7 @@ class NotebookPage extends StatefulWidget {
 }
 
 class _NotebookPageState extends State<NotebookPage> {
+  List<String> folderList = ["home", "work", "code", "play"];
   final List<Map<String, String>> items = [
     {'title': 'Item 1', 'subtitle': 'Description 1'},
     {'title': 'Item 2', 'subtitle': 'Description 2'},
@@ -31,23 +32,60 @@ class _NotebookPageState extends State<NotebookPage> {
         elevation: 2,
         shape: Border(bottom: BorderSide(color: Colors.black, width: 2)),
       ),
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          final item = items[index];
-          return Container(
-            padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
-            decoration: BoxDecoration(
-              border: Border(bottom: BorderSide(color: Colors.black, width: 2)),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            GridView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: folderList.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    margin: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Colors.amberAccent,
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      border: Border.all(color: Colors.black, width: 2),
+                    ),
+                    child: Center(
+                      child: Text(
+                        folderList[index].toUpperCase(),
+                        style: const TextStyle(fontSize: 35),
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
-            child: ListTile(
-              title: Text(item['title'] ?? 'Title'),
-              leading: const Icon(LucideIcons.zap),
-              onTap: () {},
-              trailing: Icon(Icons.more_horiz),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                final item = items[index];
+                return Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(color: Colors.black, width: 2),
+                    ),
+                  ),
+                  child: ListTile(
+                    title: Text(item['title'] ?? 'Title'),
+                    leading: const Icon(LucideIcons.zap),
+                    trailing: Icon(Icons.more_horiz),
+                    onTap: () {},
+                  ),
+                );
+              },
             ),
-          );
-        },
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
