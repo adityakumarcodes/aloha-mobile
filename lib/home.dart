@@ -69,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton.large(
           onPressed: () {},
           child: Icon(LucideIcons.search),
         ),

@@ -49,7 +49,6 @@ class _NotebookPageState extends State<NotebookPage> {
                     padding: const EdgeInsets.all(8),
                     margin: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                      color: Colors.amberAccent,
                       borderRadius: const BorderRadius.all(Radius.circular(20)),
                       border: Border.all(color: Colors.black, width: 2),
                     ),
@@ -87,10 +86,23 @@ class _NotebookPageState extends State<NotebookPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'New Task',
-        child: Icon(LucideIcons.plus),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () => {},
+            tooltip: 'Add folder',
+            heroTag: "fab1",
+            child: Icon(LucideIcons.folderPlus),
+          ),
+          SizedBox(height: 10),
+          FloatingActionButton.large(
+            onPressed: () {},
+            tooltip: 'Add Task',
+            heroTag: "fab2",
+            child: Icon(LucideIcons.plus),
+          ),
+        ],
       ),
     );
   }
