@@ -8,8 +8,7 @@ class SocialPage extends StatefulWidget {
 }
 
 class _SocialPageState extends State<SocialPage> {
-  int? _value = 0;
-  List<String> chipList = ['Feed', 'News', 'Jobs'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,28 +19,7 @@ class _SocialPageState extends State<SocialPage> {
         shape: Border(bottom: BorderSide(color: Colors.black, width: 2)),
       ),
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Wrap(
-              spacing: 5.0,
-              children:
-                  List<Widget>.generate(
-                    3,
-                    (int index) => ChoiceChip.elevated(
-                      label: Text(chipList[index]),
-                      selected: _value == index,
-                      onSelected: (bool selected) {
-                        setState(() {
-                          _value = selected ? index : null;
-                        });
-                      },
-                    ),
-                  ).toList(),
-            ),
-          ],
-        ),
+        child: Text('Social'),
       ),
     );
   }

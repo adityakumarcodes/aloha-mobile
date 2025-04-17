@@ -1,4 +1,6 @@
+import 'package:aloha_mobile/conversations.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class ChatPage extends StatelessWidget {
@@ -13,9 +15,9 @@ class ChatPage extends StatelessWidget {
         elevation: 2,
         shape: Border(bottom: BorderSide(color: Colors.black, width: 2)),
       ),
-      body: Placeholder(),
+      body: ConversationsScreen(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () =>context.push('/chat/details'),
         tooltip: 'New chat',
         child: Icon(LucideIcons.messageSquarePlus),
       ),

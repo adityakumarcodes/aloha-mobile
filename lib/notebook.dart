@@ -70,8 +70,10 @@ class _NotebookPageState extends State<NotebookPage> {
                 final item = items[index];
                 return Container(
                   decoration: BoxDecoration(
-                    border: Border(top:BorderSide(color: Colors.black, width: 2)),
-                  ),      
+                    border: Border(
+                      top: BorderSide(color: Colors.black, width: 2),
+                    ),
+                  ),
                   child: ListTile(
                     title: Text(item['title'] ?? 'Title'),
                     leading: const Icon(LucideIcons.zap),
@@ -120,7 +122,16 @@ Future<void> _dialogBuilder(BuildContext context) {
             style: TextButton.styleFrom(
               textStyle: Theme.of(context).textTheme.labelLarge,
             ),
-            child: const Text('Ok'),
+            child: const Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: const Text('Create'),
             onPressed: () {
               Navigator.of(context).pop();
             },
