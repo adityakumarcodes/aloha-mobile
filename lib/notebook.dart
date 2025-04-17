@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class NotebookPage extends StatefulWidget {
@@ -46,8 +47,7 @@ class _NotebookPageState extends State<NotebookPage> {
                 return GestureDetector(
                   onTap: () {},
                   child: Container(
-                    padding: const EdgeInsets.all(8),
-                    margin: const EdgeInsets.all(5),
+                    margin: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(20)),
                       border: Border.all(color: Colors.black, width: 2),
@@ -55,7 +55,7 @@ class _NotebookPageState extends State<NotebookPage> {
                     child: Center(
                       child: Text(
                         folderList[index].toUpperCase(),
-                        style: const TextStyle(fontSize: 35),
+                        style: const TextStyle(fontSize: 30),
                       ),
                     ),
                   ),
@@ -70,14 +70,12 @@ class _NotebookPageState extends State<NotebookPage> {
                 final item = items[index];
                 return Container(
                   decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(color: Colors.black, width: 2),
-                    ),
-                  ),
+                    border: Border(top:BorderSide(color: Colors.black, width: 2)),
+                  ),      
                   child: ListTile(
                     title: Text(item['title'] ?? 'Title'),
                     leading: const Icon(LucideIcons.zap),
-                    trailing: Icon(Icons.more_horiz),
+                    trailing: Icon(LucideIcons.ellipsisVertical),
                     onTap: () {},
                   ),
                 );
@@ -90,14 +88,16 @@ class _NotebookPageState extends State<NotebookPage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: () => {},
+            onPressed: () => _dialogBuilder(context),
             tooltip: 'Add folder',
             heroTag: "fab1",
             child: Icon(LucideIcons.folderPlus),
           ),
           SizedBox(height: 10),
           FloatingActionButton.large(
-            onPressed: () {},
+            onPressed: () {
+              context.push('/notebook/addTask');
+            },
             tooltip: 'Add Task',
             heroTag: "fab2",
             child: Icon(LucideIcons.plus),
@@ -106,4 +106,27 @@ class _NotebookPageState extends State<NotebookPage> {
       ),
     );
   }
+}
+
+Future<void> _dialogBuilder(BuildContext context) {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Add folder'),
+        content: const Text('Name of the folder'),
+        actions: <Widget>[
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelLarge,
+            ),
+            child: const Text('Ok'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

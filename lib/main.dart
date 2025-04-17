@@ -1,3 +1,4 @@
+import 'package:aloha_mobile/add_task.dart';
 import 'package:aloha_mobile/chat.dart';
 import 'package:aloha_mobile/home.dart';
 import 'package:aloha_mobile/notebook.dart';
@@ -18,6 +19,10 @@ final _router = GoRouter(
     GoRoute(
       path: '/notebook',
       builder: (context, state) => NotebookPage(),
+    ),
+    GoRoute(
+      path: '/notebook/addTask',
+      builder: (context, state) => AddTaskScreen(),
     ),
     GoRoute(
       path: '/chat',
