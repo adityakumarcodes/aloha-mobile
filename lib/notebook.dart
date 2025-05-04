@@ -23,6 +23,13 @@ class _NotebookPageState extends State<NotebookPage> {
     {'title': 'Item 9', 'subtitle': 'Description 9'},
     {'title': 'Item 10', 'subtitle': 'Description 10'},
   ];
+  final TextEditingController _folderController = TextEditingController();
+
+  @override
+  void dispose() {
+    _folderController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,19 +51,60 @@ class _NotebookPageState extends State<NotebookPage> {
                 crossAxisCount: 2,
               ),
               itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {},
+                bool isEven = folderList.length % 2 == 0;
+                bool isLast = index == folderList.length - 1;
+                bool isSecondLast = index == folderList.length - 2;
+
+                bool removeBottomBorder =
+                    isEven ? (isLast || isSecondLast) : isLast;
+                return InkWell(
+                  onTap: () {
+                    final folderName = folderList[index];
+                    context.push('/notebook/folder/$folderName');
+                  },
                   child: Container(
-                    margin: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      border: Border.all(color: Colors.black, width: 2),
-                    ),
-                    child: Center(
-                      child: Text(
-                        folderList[index].toUpperCase(),
-                        style: const TextStyle(fontSize: 30),
+                      border: Border(
+                        // left:
+                        //     index.isOdd
+                        //         ? const BorderSide(
+                        //           color: Colors.black,
+                        //           width: 1,
+                        //         )
+                        //         : BorderSide.none,
+                        right:
+                            index.isEven
+                                ? const BorderSide(
+                                  color: Colors.black,
+                                  width: 2,
+                                )
+                                : BorderSide.none,
+                        bottom:
+                            removeBottomBorder
+                                ? BorderSide.none
+                                : const BorderSide(
+                                  color: Colors.black,
+                                  width: 2,
+                                ),
                       ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.folder_rounded,
+                          size: 50.0,
+                          color: Colors.blue[600],
+                        ),
+                        const SizedBox(height: 8.0),
+                        Text(
+                          folderList[index].toUpperCase(),
+                          style: const TextStyle(fontSize: 20),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
                     ),
                   ),
                 );
@@ -76,8 +124,7 @@ class _NotebookPageState extends State<NotebookPage> {
                   ),
                   child: ListTile(
                     title: Text(item['title'] ?? 'Title'),
-                    leading: const Icon(LucideIcons.zap),
-                    trailing: Icon(LucideIcons.ellipsisVertical),
+                    leading: const Icon(LucideIcons.stickyNote),
                     onTap: () {},
                   ),
                 );
@@ -90,54 +137,75 @@ class _NotebookPageState extends State<NotebookPage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: () => _dialogBuilder(context),
-            tooltip: 'Add folder',
+            onPressed: () {},
+            tooltip: 'Calender',
             heroTag: "fab1",
+            child: Icon(LucideIcons.calendarDays),
+          ),
+          SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: () => _dialogBuilder(context),
+            tooltip: 'New folder',
+            heroTag: "fab2",
             child: Icon(LucideIcons.folderPlus),
           ),
           SizedBox(height: 10),
           FloatingActionButton.large(
-            onPressed: () {
-              context.push('/notebook/addTask');
-            },
+            onPressed: () => context.push('/notebook/addTask'),
             tooltip: 'Add Task',
-            heroTag: "fab2",
+            heroTag: "fab3",
             child: Icon(LucideIcons.plus),
           ),
         ],
       ),
     );
   }
-}
 
-Future<void> _dialogBuilder(BuildContext context) {
-  return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Add folder'),
-        content: const Text('Name of the folder'),
-        actions: <Widget>[
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.labelLarge,
+  Future<void> _dialogBuilder(BuildContext context) {
+    _folderController.clear();
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('New folder'),
+          content: TextField(
+            controller: _folderController,
+            decoration: const InputDecoration(
+              hintText: 'Enter folder name',
+              border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                        ),
             ),
-            child: const Text('Cancel'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            autofocus: true,
           ),
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.labelLarge,
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-            child: const Text('Create'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Create'),
+              onPressed: () {
+                final folderName = _folderController.text.trim();
+                if (folderName.isNotEmpty) {
+                  setState(() {
+                    folderList.add(folderName);
+                  });
+                }
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

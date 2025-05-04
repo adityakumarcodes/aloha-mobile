@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ConversationsScreen extends StatefulWidget {
-  const ConversationsScreen({Key? key}) : super(key: key);
-
+  const ConversationsScreen({super.key});
+  
   @override
-  _ConversationsScreenState createState() => _ConversationsScreenState();
+  State<ConversationsScreen> createState() => _ConversationsScreenState();
 }
 
 class _ConversationsScreenState extends State<ConversationsScreen> {

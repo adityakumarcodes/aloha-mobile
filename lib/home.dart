@@ -28,15 +28,6 @@ class _MyHomePageState extends State<MyHomePage> {
         elevation: 2,
         shape: Border(bottom: BorderSide(color: Colors.black, width: 2)),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Text('Integrate taskmaster'),
-            Text('Integrate chatmaster'),
-            Text('Add auth'),
-          ],
-        ),
-      ),
       // drawer: Drawer(
       //   child: Column(
       //     children: <Widget>[
@@ -112,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
             label: Text('Notebook'),
           ),
           const NavigationDrawerDestination(
-            icon: Icon(LucideIcons.messageSquare),
+            icon: Icon(LucideIcons.messageCircleMore),
             label: Text('Chat'),
           ),
           const NavigationDrawerDestination(

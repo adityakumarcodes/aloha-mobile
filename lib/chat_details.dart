@@ -8,10 +8,10 @@ import 'package:provider/provider.dart';
 class ChatDetails extends StatefulWidget {
   final ChatUsers user;
 
-  const ChatDetails({Key? key, required this.user}) : super(key: key);
+  const ChatDetails({super.key, required this.user});
 
   @override
-  _ChatDetailsState createState() => _ChatDetailsState();
+  State<ChatDetails> createState() => _ChatDetailsState();
 }
 
 class _ChatDetailsState extends State<ChatDetails> {
@@ -150,12 +150,10 @@ class _ChatDetailsState extends State<ChatDetails> {
                           ),
                         ),
                         Text(
-                          DateTime.now().hour.toString() +
-                              ":" +
-                              DateTime.now()
+                          "${DateTime.now().hour}:${DateTime.now()
                                   .minute
                                   .toString()
-                                  .padLeft(2, "0"),
+                                  .padLeft(2, "0")}",
                           // style: const TextStyle(color: Colors.black45),
                         ),
                       ],
@@ -379,12 +377,12 @@ class CircularIconButton extends StatelessWidget {
   final IconData icon;
   final void Function()? onPress;
   const CircularIconButton({
-    Key? key,
+    super.key,
     required this.color,
     required this.label,
     required this.icon,
     required this.onPress,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
