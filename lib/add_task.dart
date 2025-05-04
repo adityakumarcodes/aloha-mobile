@@ -32,11 +32,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 24.0),
-                    const Text(
-                      'Task',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8.0),
                     TextFormField(
                       decoration: const InputDecoration(
                         hintText: 'Enter task here',
@@ -49,12 +44,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       keyboardType: TextInputType.name,
                       textCapitalization: TextCapitalization.sentences,
                     ),
-                    const SizedBox(height: 30.0),
-                    const Text(
-                      'Description',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8.0),
+                    const SizedBox(height: 30.0),                    
                     TextFormField(
                       decoration: const InputDecoration(
                         hintText: 'Enter description here',
@@ -82,7 +72,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     onPressed: () {},
                     child: const Text(
                       'ADD TASK',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 18),
                     ),
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:aloha_mobile/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -10,19 +11,8 @@ class NotebookPage extends StatefulWidget {
 }
 
 class _NotebookPageState extends State<NotebookPage> {
-  List<String> folderList = ["home", "work", "code", "play"];
-  final List<Map<String, String>> items = [
-    {'title': 'Item 1', 'subtitle': 'Description 1'},
-    {'title': 'Item 2', 'subtitle': 'Description 2'},
-    {'title': 'Item 3', 'subtitle': 'Description 3'},
-    {'title': 'Item 4', 'subtitle': 'Description 4'},
-    {'title': 'Item 5', 'subtitle': 'Description 5'},
-    {'title': 'Item 6', 'subtitle': 'Description 6'},
-    {'title': 'Item 7', 'subtitle': 'Description 7'},
-    {'title': 'Item 8', 'subtitle': 'Description 8'},
-    {'title': 'Item 9', 'subtitle': 'Description 9'},
-    {'title': 'Item 10', 'subtitle': 'Description 10'},
-  ];
+  List<String> folderList = ["Home", "Work", "Code", "Play"];
+
   final TextEditingController _folderController = TextEditingController();
 
   @override
@@ -55,8 +45,8 @@ class _NotebookPageState extends State<NotebookPage> {
                 bool isLast = index == folderList.length - 1;
                 bool isSecondLast = index == folderList.length - 2;
 
-                bool removeBottomBorder =
-                    isEven ? (isLast || isSecondLast) : isLast;
+                // bool removeBottomBorder =
+                    // isEven ? (isLast || isSecondLast) : isLast;
                 return InkWell(
                   onTap: () {
                     final folderName = folderList[index];
@@ -65,13 +55,6 @@ class _NotebookPageState extends State<NotebookPage> {
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border(
-                        // left:
-                        //     index.isOdd
-                        //         ? const BorderSide(
-                        //           color: Colors.black,
-                        //           width: 1,
-                        //         )
-                        //         : BorderSide.none,
                         right:
                             index.isEven
                                 ? const BorderSide(
@@ -80,9 +63,7 @@ class _NotebookPageState extends State<NotebookPage> {
                                 )
                                 : BorderSide.none,
                         bottom:
-                            removeBottomBorder
-                                ? BorderSide.none
-                                : const BorderSide(
+                             const BorderSide(
                                   color: Colors.black,
                                   width: 2,
                                 ),
@@ -94,14 +75,13 @@ class _NotebookPageState extends State<NotebookPage> {
                       children: [
                         Icon(
                           Icons.folder_rounded,
-                          size: 50.0,
+                          size: 40,
                           color: Colors.blue[600],
                         ),
-                        const SizedBox(height: 8.0),
+                        const SizedBox(height: 6),
                         Text(
-                          folderList[index].toUpperCase(),
-                          style: const TextStyle(fontSize: 20),
-                          maxLines: 2,
+                          folderList[index],
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
@@ -110,23 +90,28 @@ class _NotebookPageState extends State<NotebookPage> {
                 );
               },
             ),
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                final item = items[index];
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(color: Colors.black, width: 2),
+            ListView.separated(
+              separatorBuilder:
+                  (context, index) => Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(color: Colors.black, width: 2),
+                      ),
                     ),
                   ),
-                  child: ListTile(
-                    title: Text(item['title'] ?? 'Title'),
-                    leading: const Icon(LucideIcons.stickyNote),
-                    onTap: () {},
-                  ),
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: taskItems.length,
+              itemBuilder: (context, index) {
+                final item = taskItems[index];
+                return ListTile(
+                  title: Text(
+                          item['title'] ?? 'Title',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                  leading:Icon(LucideIcons.stickyNote),
+                  onTap: () {},
                 );
               },
             ),
@@ -173,8 +158,8 @@ class _NotebookPageState extends State<NotebookPage> {
             decoration: const InputDecoration(
               hintText: 'Enter folder name',
               border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                        ),
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+              ),
             ),
             autofocus: true,
           ),
@@ -188,7 +173,7 @@ class _NotebookPageState extends State<NotebookPage> {
                 Navigator.of(context).pop();
               },
             ),
-            TextButton(
+            FilledButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),

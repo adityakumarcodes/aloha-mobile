@@ -1,4 +1,6 @@
+import 'package:aloha_mobile/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class FolderList extends StatelessWidget {
   final String folderName;
@@ -9,28 +11,35 @@ class FolderList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.folder_rounded, size: 30, color: Colors.blue[600]),
-            const SizedBox(height: 8.0),
-            Text(
-              folderName.toUpperCase(),
-              style: const TextStyle(fontSize: 20),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
+        title: Text(
+          folderName,
+          style: const TextStyle(fontSize: 20),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
         centerTitle: true,
         elevation: 2,
         shape: const Border(bottom: BorderSide(color: Colors.black, width: 2)),
       ),
-      body: InteractiveViewer(
-        boundaryMargin: const EdgeInsets.all(20.0),
-        minScale: 0.1,
-        maxScale: 1.6,
-        child: Image.asset('assets/profiles/image.png',width:400)),
+      body: ListView.separated(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: taskItems.length,
+        itemBuilder: (context, index) {
+          final item = taskItems[index];
+          return ListTile(
+            title: Text(item['title'] ?? 'Title'),
+            leading: const Icon(LucideIcons.stickyNote),
+            onTap: () {},
+          );
+        },
+        separatorBuilder:
+            (context, index) => Container(
+              decoration: BoxDecoration(
+                border: Border(top: BorderSide(color: Colors.black, width: 2)),
+              ),
+            ),
+      ),
     );
   }
 }

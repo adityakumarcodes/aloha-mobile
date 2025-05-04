@@ -1,5 +1,19 @@
 import 'package:flutter/material.dart';
 
+ final List taskItems = [
+    {'title': 'Item 1', 'subtitle': 'Description 1'},
+    {'title': 'Item 1', 'subtitle': 'Description 1'},
+    {'title': 'Item 2', 'subtitle': 'Description 2'},
+    {'title': 'Item 3', 'subtitle': 'Description 3'},
+    {'title': 'Item 4', 'subtitle': 'Description 4'},
+    {'title': 'Item 5', 'subtitle': 'Description 5'},
+    {'title': 'Item 6', 'subtitle': 'Description 6'},
+    {'title': 'Item 7', 'subtitle': 'Description 7'},
+    {'title': 'Item 8', 'subtitle': 'Description 8'},
+    {'title': 'Item 9', 'subtitle': 'Description 9'},
+    {'title': 'Item 10', 'subtitle': 'Description 10'},
+  ];
+  
 class ChatUsers {
   String name;
   String location;
