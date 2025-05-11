@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:aloha_mobile/constants.dart';
 import 'package:aloha_mobile/home.dart';
 import 'package:aloha_mobile/icon_tile.dart';
@@ -49,6 +51,7 @@ class _NotebookPageState extends State<NotebookPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GridView.count(
@@ -62,166 +65,85 @@ class _NotebookPageState extends State<NotebookPage> {
                     folderList.map((item) {
                       return IconTile(
                         item: item,
-                        onTap: () => context.push(item.route),
+                        onTap:
+                            () => context.push('/notebook/folder${item.route}'),
                       );
                     }).toList(),
               ),
             ),
-            // GridView.builder(
-            //   physics: const NeverScrollableScrollPhysics(),
-            //   shrinkWrap: true,
-            //   itemCount: folderList.length,
-            //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            //     crossAxisCount: 2,
-            //     childAspectRatio: 3,
-            //   ),
-            //   itemBuilder: (context, index) {
-            //     bool isEven = folderList.length % 2 == 0;
-            //     bool isLast = index == folderList.length - 1;
-            //     bool isSecondLast = index == folderList.length - 2;
-
-            //     // bool removeBottomBorder =
-            //     // isEven ? (isLast || isSecondLast) : isLast;
-            //     return InkWell(
-            //       onTap: () {
-            //         final folderName = folderList[index];
-            //         context.push('/notebook/folder/$folderName');
-            //       },
-            //       child: Container(
-            //         decoration: BoxDecoration(
-            //           border: Border(
-            //             right:
-            //                 index.isEven
-            //                     ? const BorderSide(
-            //                       color: Colors.black,
-            //                       width: 2,
-            //                     )
-            //                     : BorderSide.none,
-            //             bottom: const BorderSide(color: Colors.black, width: 2),
-            //           ),
-            //         ),
-            //         child: Row(
-            //           // mainAxisAlignment: MainAxisAlignment.center,
-            //           crossAxisAlignment: CrossAxisAlignment.center,
-            //           children: [
-            //             Padding(
-            //               padding: const EdgeInsets.all(8.0),
-            //               child: Icon(
-            //                 Icons.folder_rounded,
-            //                 size: 40,
-            //                 color: Colors.blue[600],
-            //               ),
-            //             ),
-            //             const SizedBox(height: 6),
-            //             Text(
-            //               folderList[index].text,
-            //               maxLines: 1,
-            //               overflow: TextOverflow.ellipsis,
-            //               style: Theme.of(context).textTheme.bodyLarge,
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     );
-            //   },
-            // ),
-            // ListView.builder(
-            // separatorBuilder:
-            //     (context, index) => Container(
-            //       decoration: BoxDecoration(
-            //         border: Border(
-            //           top: BorderSide(color: Colors.black, width: 2),
-            //         ),
-            //       ),
-            //     ),
-            //   physics: const NeverScrollableScrollPhysics(),
-            //   shrinkWrap: true,
-            //   itemCount: taskItems.length,
-            //   itemBuilder: (context, index) {
-            //     final item = taskItems[index];
-            //     return ListTile(
-            //       title: Text(
-            //         item['title'] ?? 'Title',
-            //         maxLines: 1,
-            //         overflow: TextOverflow.ellipsis,
-            //         // style: Theme.of(context).textTheme.bodyLarge,
-            //       ),
-            //       leading: Icon(LucideIcons.stickyNote),
-            //       onTap: () {},
-            //     );
-            //   },
-            // ),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-               itemBuilder: (BuildContext context, int index) { 
-                  return Padding(
-                      padding: const EdgeInsets.only(
-                        top: 5,
-                        bottom: 5,
-                        left: 10,
-                        right: 10
-                      ),
-                      child: ListTile(
-                        title: Text(
-                          taskItems[index].title,
-                          // document['task'],
-                          // style: TextStyle(
-                          //   // color: Colors.white,
-                          //   // fontSize: 20,
-                          //   // decoration: document['completed']
-                          //   // ? TextDecoration.lineThrough
-                          //   // : null,
-                          //   // decorationThickness: 3,
-                          // ),
-                        ),
-                        leading: const Icon(LucideIcons.asterisk),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        tileColor: Colors.white,
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 5,
-                          horizontal: 15,
-                        ),
-                        onTap: () {
-                          showModalBottomSheet(
-                            clipBehavior: Clip.hardEdge,
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (context) {
-                              return DraggableScrollableSheet(
-                                initialChildSize: 0.5,
-                                minChildSize: 0.2,
-                                maxChildSize: 1,
-                                expand: false,
-                                builder:
-                                    (_, controller) => SingleChildScrollView(
-                                      controller: controller,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(12),
-                                        // child: Message(document: document),
-                                      ),
+              itemCount: taskItems.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.only(
+                    top: 5,
+                    bottom: 5,
+                    left: 10,
+                    right: 10,
+                  ),
+                  child: ListTile(
+                    title: Text(taskItems[index]['title']),
+                    leading: const Icon(LucideIcons.asterisk),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    tileColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5,
+                      horizontal: 15,
+                    ),
+                    onTap: () {
+                      showModalBottomSheet(
+                        clipBehavior: Clip.hardEdge,
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) {
+                          return DraggableScrollableSheet(
+                            initialChildSize: 0.5,
+                            minChildSize: 0.2,
+                            maxChildSize: 1,
+                            expand: false,
+                            builder:
+                                (_, controller) => SingleChildScrollView(
+                                  controller: controller,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          taskItems[index]['title'],
+                                          style:
+                                              Theme.of(
+                                                context,
+                                              ).textTheme.titleLarge,
+                                        ),
+                                        const SizedBox(height: 8),
+                                        ..._renderSubtitle(
+                                          taskItems[index]['subtitle'],
+                                        ),
+                                      ],
                                     ),
-                              );
-                            },
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(50),
-                                topRight: Radius.circular(50),
-                              ),
-                            ),
+                                  ),
+                                ),
                           );
                         },
-                        onLongPress: () {
-                          // firestoreServices.toggleCompleted(document);
-                        },
-                      ),
-                    );
-               },
-              // children:
-              //     ).toList(),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(12),
+                            topRight: Radius.circular(12),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
             ),
+            SizedBox(height: 30),
           ],
         ),
       ),
@@ -298,5 +220,51 @@ class _NotebookPageState extends State<NotebookPage> {
         );
       },
     );
+  }
+}
+
+List<Widget> _renderSubtitle(dynamic subtitle) {
+   if (subtitle is String) {
+    return [Text(subtitle)];
+  }else if (subtitle is Map && subtitle.containsKey('blocks')) {
+    return List<Widget>.from(
+      subtitle['blocks'].map<Widget>((block) {
+        final type = block['type'];
+        final data = block['data'];
+
+        switch (type) {
+          case 'header':
+            final text = data?['text'] ?? '';
+            final level = data?['level'] ?? 4;
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontSize: (24 - level.clamp(1, 6) * 2).toDouble(),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            );
+          case 'delimiter':
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(LucideIcons.asterisk),
+                  Icon(LucideIcons.asterisk),
+                  Icon(LucideIcons.asterisk),
+                ],
+              ),
+            );
+          default:
+            return const SizedBox.shrink(); // skip unknown types
+        }
+      }),
+    );
+  } else {
+    return [Text(jsonEncode(subtitle))]; // fallback if format is unexpected
   }
 }
