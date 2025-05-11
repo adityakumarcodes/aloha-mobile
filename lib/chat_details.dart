@@ -60,10 +60,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                     ),
                   ),
                   if ((friendProvider.friendSelectedToChat % 3 == 0) == false)
-                    const Text(
-                      "Online",
-                      style: TextStyle(fontSize: 13),
-                    ),
+                    const Text("Online", style: TextStyle(fontSize: 13)),
                 ],
               ),
             ),
@@ -90,11 +87,9 @@ class _ChatDetailsState extends State<ChatDetails> {
             ),
             onSelected: handleClick,
             itemBuilder: (context) {
-              return {
-                'View profile',
-                'Search',
-                'Mute notifications',
-              }.map((String choice) {
+              return {'View profile', 'Search', 'Mute notifications'}.map((
+                String choice,
+              ) {
                 return PopupMenuItem<String>(
                   value: choice,
                   child: Text(choice),
@@ -118,24 +113,25 @@ class _ChatDetailsState extends State<ChatDetails> {
                 return Container(
                   padding: EdgeInsets.only(
                     left: messages[index].messageType == "receiver" ? 14 : 60,
-                    right:
-                        messages[index].messageType == "receiver" ? 60 : 14,
+                    right: messages[index].messageType == "receiver" ? 60 : 14,
                     top: 6,
                     bottom: 6,
                   ),
                   child: Align(
-                    alignment: (messages[index].messageType == "receiver"
-                        ? Alignment.topLeft
-                        : Alignment.topRight),
+                    alignment:
+                        (messages[index].messageType == "receiver"
+                            ? Alignment.topLeft
+                            : Alignment.topRight),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: (messages[index].messageType == "receiver"
-                                ? Colors.grey.shade300
-                                : Theme.of(context).primaryColor),
+                            color:
+                                (messages[index].messageType == "receiver"
+                                    ? Colors.grey.shade300
+                                    : Theme.of(context).primaryColor),
                           ),
                           padding: const EdgeInsets.all(16),
                           child: Text(
@@ -150,10 +146,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                           ),
                         ),
                         Text(
-                          "${DateTime.now().hour}:${DateTime.now()
-                                  .minute
-                                  .toString()
-                                  .padLeft(2, "0")}",
+                          "${DateTime.now().hour}:${DateTime.now().minute.toString().padLeft(2, "0")}",
                           // style: const TextStyle(color: Colors.black45),
                         ),
                       ],
@@ -167,7 +160,6 @@ class _ChatDetailsState extends State<ChatDetails> {
           Align(
             alignment: Alignment.bottomLeft,
             child: Container(
-              
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 color: Colors.white,
@@ -188,7 +180,8 @@ class _ChatDetailsState extends State<ChatDetails> {
                     onPressed: () {
                       showModalBottomSheet(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
                         context: context,
                         constraints: const BoxConstraints(maxWidth: 500),
                         builder: (context) {
@@ -218,7 +211,8 @@ class _ChatDetailsState extends State<ChatDetails> {
                     onPressed: () {
                       showModalBottomSheet(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
                         context: context,
                         constraints: const BoxConstraints(maxWidth: 500),
                         builder: (context) {
@@ -283,10 +277,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                   FloatingActionButton(
                     onPressed: () {},
                     backgroundColor: Theme.of(context).primaryColor,
-                    child: const Icon(
-                      Icons.send,
-                      color: Colors.white,
-                    ),
+                    child: const Icon(Icons.send, color: Colors.white),
                   ),
                 ],
               ),
@@ -297,61 +288,54 @@ class _ChatDetailsState extends State<ChatDetails> {
       endDrawer: ClipRRect(
         // borderRadius: const BorderRadius.all(Radius.circular(50)),
         child: Drawer(
-            // width: MediaQuery.of(context).size.width / 3,
-            child: Column(
-              children: [
-                ListView(
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    UserAccountsDrawerHeader(
-                      currentAccountPicture: ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
-                        child: Image.asset(
-                          user.imageURL,
-                          width: 200,
-                          height: 200,
-                        ),
-                      ),
-                      // curve: Curves.bounceOut,
-                      // child: Text('Drawer Header'),
-                      // decoration: const BoxDecoration(
-                      //   color: Colors.redAccent,
-                      // ),
-                      accountEmail: const Text('ak19992017@gmail.com'),
-                      accountName: Text(user.name),
-                    ),
-                    Card(
-                      child: ListTile(
-                        leading: const Icon(LucideIcons.paperclip),
-                        title: const Text('Media, links and docs'),
-                        onTap: () {},
+          // width: MediaQuery.of(context).size.width / 3,
+          child: Column(
+            children: [
+              ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  UserAccountsDrawerHeader(
+                    currentAccountPicture: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Image.asset(
+                        user.imageURL,
+                        width: 200,
+                        height: 200,
                       ),
                     ),
-                    Card(
-                      child: ListTile(
-                        leading: const Icon(Icons.block),
-                        title: const Text('Block '),
-                        onTap: () {},
-                      ),
-                    ),
-                    Card(
-                      child: ListTile(
-                        leading: const Icon(Icons.thumb_down),
-                        title: const Text('Report'),
-                        onTap: () {},
-                      ),
-                    ),
-                    Card(
-                      child: ListTile(
-                        leading: const Icon(LucideIcons.trash2),
-                        title: const Text('Delete chat'),
-                        onTap: () {},
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            )),
+                    // curve: Curves.bounceOut,
+                    // child: Text('Drawer Header'),
+                    // decoration: const BoxDecoration(
+                    //   color: Colors.redAccent,
+                    // ),
+                    accountEmail: const Text('ak19992017@gmail.com'),
+                    accountName: Text(user.name),
+                  ),
+                  ListTile(
+                    leading: const Icon(LucideIcons.paperclip),
+                    title: const Text('Media, links and docs'),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.block),
+                    title: const Text('Block '),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    leading: const Icon(LucideIcons.trash2),
+                    title: const Text('Delete chat'),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.thumb_down),
+                    title: const Text('Report'),
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -368,8 +352,6 @@ class _ChatDetailsState extends State<ChatDetails> {
     }
   }
 }
-
-
 
 class CircularIconButton extends StatelessWidget {
   final Color color;
@@ -389,23 +371,16 @@ class CircularIconButton extends StatelessWidget {
     return Column(
       children: [
         Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: color,
-          ),
+          decoration: BoxDecoration(shape: BoxShape.circle, color: color),
           margin: const EdgeInsets.all(20),
           height: 60,
           width: 60,
           child: IconButton(
-            icon: Icon(
-              icon,
-              color: Colors.white,
-              size: 30,
-            ),
+            icon: Icon(icon, color: Colors.white, size: 30),
             onPressed: onPress,
           ),
         ),
-        Text(label)
+        Text(label),
       ],
     );
   }

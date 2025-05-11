@@ -19,15 +19,6 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // // Header UI
-          // const Padding(
-          //   padding: EdgeInsets.only(left: 16, right: 16, top: 10),
-          //   child: Text(
-          //     "Messages",
-          //     style: TextStyle(fontSize: 52, fontWeight: FontWeight.bold),
-          //   ),
-          // ),
-          // Search bar
           Padding(
             padding: const EdgeInsets.fromLTRB(6,16,6,0),
             child: TextField(
@@ -37,9 +28,9 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
                 prefixIcon: Icon(
                   Icons.search,
                   // color: Colors.grey.shade600,
-                  size: 20,
+                  // size: 20,
                 ),
-                filled: true,
+                // filled: true,
                 // fillColor: Colors.grey.shade300,
                 contentPadding: const EdgeInsets.all(8),
                 enabledBorder: OutlineInputBorder(
@@ -70,7 +61,7 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
                     children: [
                       CircleAvatar(
                         backgroundImage: AssetImage(chatUsers[index].imageURL),
-                        // maxRadius: 35,
+                        maxRadius: 30,
                       ),
                       if ((index % 3 == 0) == false)
                         Positioned(
@@ -87,7 +78,7 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
                         ),
                     ],
                   ),
-                  title: Text(chatUsers[index].name),
+                  title: Text(chatUsers[index].name,style: Theme.of(context).textTheme.bodyLarge),
                   subtitle: Text(chatUsers[index].messageText),
                   trailing: Text(chatUsers[index].time),
                 );

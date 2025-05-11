@@ -1,3 +1,4 @@
+import 'package:aloha_mobile/icon_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -8,113 +9,60 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+class CategoryItem {
+  final IconData icon;
+  final String text;
+  final String route;
+
+  CategoryItem({required this.icon, required this.text, required this.route});
+}
+
+final List<CategoryItem> categoriesList = [
+  CategoryItem(
+    icon: LucideIcons.bookOpen,
+    text: 'Notebook',
+    route: '/notebook',
+  ),
+  CategoryItem(
+    icon: LucideIcons.messageCircleMore,
+    text: 'Chat',
+    route: '/chat',
+  ),
+  CategoryItem(icon: LucideIcons.pyramid, text: 'Social', route: '/social'),
+  CategoryItem(icon: LucideIcons.shoppingBag, text: 'Shop', route: '/shop'),
+  CategoryItem(icon: LucideIcons.bolt, text: 'Settings', route: '/settings'),
+];
+
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  int _selectedIndex = 0;
-  final List<String> _routes = [
-    '/',
-    '/notebook',
-    '/chat',
-    '/social',
-    '/settings',
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.purple.shade50,
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Home'),
         centerTitle: true,
         elevation: 2,
-        shape: Border(bottom: BorderSide(color: Colors.black, width: 2)),
+        // shape: Border(bottom: BorderSide(color: Colors.black, width: 2)),
       ),
-      // drawer: Drawer(
-      //   child: Column(
-      //     children: <Widget>[
-      //       DrawerHeader(child: Center(child: Text('Aloha'))),
-      //       ListTile(
-      //         leading: Icon(LucideIcons.house),
-      //         title: Text('Home'),
-      //         onTap: () {
-      //           Navigator.of(context).pop();
-      //         },
-      //       ),
-      //       ListTile(
-      //         leading: Icon(LucideIcons.bookOpen),
-      //         title: Text('Notebook'),
-      //         onTap: () {
-      //           Navigator.of(context).pop();
-      //           context.push('/notebook');
-      //         },
-      //       ),
-      //       ListTile(
-      //         leading: Icon(LucideIcons.messageSquare),
-      //         title: Text('Chat'),
-      //         onTap: () {
-      //           Navigator.of(context).pop();
-      //           context.push('/chat');
-      //         },
-      //       ),
-      //       ListTile(
-      //         leading: Icon(LucideIcons.pyramid),
-      //         title: Text('Social'),
-      //         onTap: () {
-      //           Navigator.of(context).pop();
-      //           context.push('/social');
-      //         },
-      //       ),
-      //       ListTile(
-      //         leading: Icon(LucideIcons.bolt),
-      //         title: Text('Settings'),
-      //         onTap: () {
-      //           Navigator.of(context).pop();
-      //           context.push('/settings');
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // ),
-      drawer: NavigationDrawer(
-        selectedIndex: _selectedIndex,
-        onDestinationSelected: (int index) {
-          setState(() => _selectedIndex = index);
-          Navigator.pop(context);
-          context.push(_routes[index]);
-          
-        },
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
-            child: Text('Aloha'),
-          ),
-          Divider(),
-          const NavigationDrawerDestination(
-            icon: Icon(LucideIcons.house),
-            selectedIcon: Icon(
-              LucideIcons.house,
-            ), // Optional: Define specific selected icon
-            label: Text('Home'),
-          ),
-          const NavigationDrawerDestination(
-            icon: Icon(LucideIcons.bookOpen),
-            selectedIcon: Icon(
-              LucideIcons.bookOpen,
-            ), // Optional: Define specific selected icon
-            label: Text('Notebook'),
-          ),
-          const NavigationDrawerDestination(
-            icon: Icon(LucideIcons.messageCircleMore),
-            label: Text('Chat'),
-          ),
-          const NavigationDrawerDestination(
-            icon: Icon(LucideIcons.pyramid),
-            label: Text('Social'),
-          ),
-          const NavigationDrawerDestination(
-            icon: Icon(LucideIcons.bolt),
-            label: Text('Settings'),
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.count(
+          crossAxisCount: 2,
+          childAspectRatio: 3,
+          shrinkWrap: true,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          physics: const NeverScrollableScrollPhysics(),
+          children:
+              categoriesList.map((item) {
+                return IconTile(
+                  item: item,
+                  onTap: () => context.push(item.route),
+                );
+              }).toList(),
+        ),
       ),
       floatingActionButton: FloatingActionButton.large(
         onPressed: () {},
