@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:aloha_mobile/icon_tile.dart';
+import 'package:aloha_mobile/wordoftheday.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -30,12 +34,17 @@ final List<CategoryItem> categoriesList = [
   ),
   CategoryItem(icon: LucideIcons.pyramid, text: 'Social', route: '/social'),
   CategoryItem(icon: LucideIcons.shoppingBag, text: 'Shop', route: '/shop'),
-  CategoryItem(icon: LucideIcons.hardDrive, text: 'My Drive', route: '/mydrive'),
+  CategoryItem(
+    icon: LucideIcons.hardDrive,
+    text: 'My Drive',
+    route: '/mydrive',
+  ),
   CategoryItem(icon: LucideIcons.bolt, text: 'Settings', route: '/settings'),
 ];
 
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,25 +54,29 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Home'),
         centerTitle: true,
         elevation: 2,
-        // shape: Border(bottom: BorderSide(color: Colors.black, width: 2)),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.count(
-          crossAxisCount: 2,
-          childAspectRatio: 3,
-          shrinkWrap: true,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          physics: const NeverScrollableScrollPhysics(),
-          children:
-              categoriesList.map((item) {
-                return IconTile(
-                  item: item,
-                  onTap: () => context.push(item.route),
-                );
-              }).toList(),
-        ),
+      body: Column(
+        children: [
+          WordOfTheDay(word: 'heloo', meaning: 'Ji', onTap: () {}),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GridView.count(
+              crossAxisCount: 2,
+              childAspectRatio: 3,
+              shrinkWrap: true,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              physics: const NeverScrollableScrollPhysics(),
+              children:
+                  categoriesList.map((item) {
+                    return IconTile(
+                      item: item,
+                      onTap: () => context.push(item.route),
+                    );
+                  }).toList(),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},

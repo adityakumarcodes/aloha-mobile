@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:aloha_mobile/add_task.dart';
 import 'package:aloha_mobile/chat.dart';
 import 'package:aloha_mobile/chat_details.dart';
@@ -7,14 +9,25 @@ import 'package:aloha_mobile/home.dart';
 import 'package:aloha_mobile/notebook.dart';
 import 'package:aloha_mobile/social.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
+  final YOUR_SUPABASE_URL=dotenv.env['YOUR_SUPABASE_URL']??'';
+  final YOUR_SUPABASE_ANON_KEY=dotenv.env['YOUR_SUPABASE_ANON_KEY']??'';
+  await Supabase.initialize(
+    url: YOUR_SUPABASE_URL,
+    anonKey: YOUR_SUPABASE_ANON_KEY,
+  );
   runApp(
     MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => FriendProvider())],
-      child: const MyApp(),
+      child: MyApp(),
     ),
   );
 }
@@ -59,6 +72,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       title: 'Aloha',
       theme: ThemeData(useMaterial3: true),
       routerConfig: _router,

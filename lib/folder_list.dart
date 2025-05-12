@@ -1,44 +1,144 @@
 import 'package:aloha_mobile/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class FolderList extends StatelessWidget {
+class FolderList extends StatefulWidget {
   final String folderName;
 
   const FolderList({super.key, required this.folderName});
 
   @override
+  State<FolderList> createState() => _FolderListState();
+}
+
+class _FolderListState extends State<FolderList> {
+  List data = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchTasks();
+  }
+
+  Future _fetchTasks() async {
+    final response = await Supabase.instance.client
+        .from('tasks')
+        .select()
+        .like('category', widget.folderName.toLowerCase())
+        .order('id');
+    setState(() => data = response);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.purple.shade50,
       appBar: AppBar(
         title: Text(
-          folderName,
+          widget.folderName.toUpperCase(),
           style: const TextStyle(fontSize: 20),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
         centerTitle: true,
         elevation: 2,
-        shape: const Border(bottom: BorderSide(color: Colors.black, width: 2)),
+        // shape: const Border(bottom: BorderSide(color: Colors.black, width: 2)),
       ),
-      body: ListView.separated(
-        physics: const NeverScrollableScrollPhysics(),
+      body: ListView.builder(
         shrinkWrap: true,
-        itemCount: taskItems.length,
-        itemBuilder: (context, index) {
-          final item = taskItems[index];
-          return ListTile(
-            title: Text(item['title'] ?? 'Title'),
-            leading: const Icon(LucideIcons.stickyNote),
-            onTap: () {},
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: data.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.only(
+              top: 5,
+              bottom: 5,
+              left: 10,
+              right: 10,
+            ),
+            child: ListTile(
+              title: Text(
+                data[index]['task'],
+                style: TextStyle(
+                  fontSize: 20,
+                  decoration:
+                      data[index]['completed']
+                          ? TextDecoration.lineThrough
+                          : null,
+                  decorationThickness: 3,
+                ),
+              ),
+              leading: const Icon(LucideIcons.asterisk),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              tileColor: Colors.white,
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 5,
+                horizontal: 15,
+              ),
+              onTap: () {
+                showModalBottomSheet(
+                  clipBehavior: Clip.hardEdge,
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) {
+                    return DraggableScrollableSheet(
+                      initialChildSize: 0.5,
+                      minChildSize: 0.2,
+                      maxChildSize: 1,
+                      expand: false,
+                      builder:
+                          (_, controller) => SingleChildScrollView(
+                            controller: controller,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Column(
+                                children: [
+                                  const Icon(
+                                    LucideIcons.chevronUp,
+                                    color: Colors.grey,
+                                    size: 30,
+                                  ),
+                                  Text(
+                                    data[index]['task'],
+                                    style: const TextStyle(
+                                      fontSize: 35,
+                                      // fontWeight: FontWeight.bold,
+                                    ),
+                                    overflow: TextOverflow.visible,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    DateFormat.yMMMd().add_jm().format(
+                                      DateTime.parse(data[index]['createdOn']),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 15),
+                                  SelectableText(
+                                    data[index]['description'],
+                                    style: const TextStyle(fontSize: 25),
+                                  ),
+                                  const SizedBox(height: 40),
+                                ],
+                              ),
+                            ),
+                          ),
+                    );
+                  },
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(50),
+                      topRight: Radius.circular(50),
+                    ),
+                  ),
+                );
+              },
+            ),
           );
         },
-        separatorBuilder:
-            (context, index) => Container(
-              decoration: BoxDecoration(
-                border: Border(top: BorderSide(color: Colors.black, width: 2)),
-              ),
-            ),
       ),
     );
   }
