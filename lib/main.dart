@@ -18,19 +18,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  String YOUR_SUPABASE_URL = String.fromEnvironment('YOUR_SUPABASE_URL');
-  String YOUR_SUPABASE_ANON_KEY = String.fromEnvironment('YOUR_SUPABASE_ANON_KEY');
-
-  if (!const bool.fromEnvironment('CI')) {
-    await dotenv.load(fileName: ".env");
-  YOUR_SUPABASE_URL = dotenv.env['YOUR_SUPABASE_URL'] ?? '';
-  YOUR_SUPABASE_ANON_KEY = dotenv.env['YOUR_SUPABASE_ANON_KEY'] ?? '';
-  }
-  
-
   await Supabase.initialize(
-    url: YOUR_SUPABASE_URL,
-    anonKey: YOUR_SUPABASE_ANON_KEY,
+    url: 'https://afchbjopvwwocaqtwgxo.supabase.co', 
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFmY2hiam9wdnd3b2NhcXR3Z3hvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM1OTUwNTksImV4cCI6MjA0OTE3MTA1OX0.XJsAYSp6chxfhi61kpGc8v9wz2B3ppCF7NcqhBDUwVA',
   );
   runApp(
     MultiProvider(
