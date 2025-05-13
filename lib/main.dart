@@ -20,10 +20,13 @@ Future<void> main() async {
 
   if (!const bool.fromEnvironment('CI')) {
     await dotenv.load(fileName: ".env");
+  String YOUR_SUPABASE_URL = dotenv.env['YOUR_SUPABASE_URL'] ?? '';
+  String YOUR_SUPABASE_ANON_KEY = dotenv.env['YOUR_SUPABASE_ANON_KEY'] ?? '';
   }
   
-  final YOUR_SUPABASE_URL = dotenv.env['YOUR_SUPABASE_URL'] ?? '';
-  final YOUR_SUPABASE_ANON_KEY = dotenv.env['YOUR_SUPABASE_ANON_KEY'] ?? '';
+  String YOUR_SUPABASE_URL = String.fromEnvironment('YOUR_SUPABASE_URL');
+  String YOUR_SUPABASE_ANON_KEY = String.fromEnvironment('YOUR_SUPABASE_ANON_KEY');
+
   await Supabase.initialize(
     url: YOUR_SUPABASE_URL,
     anonKey: YOUR_SUPABASE_ANON_KEY,
