@@ -37,6 +37,7 @@ dependencies:
   intl: ^0.20.2
   lucide_icons_flutter: ^2.0.3
   provider: ^6.1.4
+  shimmer: ^3.0.0
   supabase_flutter: ^2.9.0
 
 dev_dependencies:

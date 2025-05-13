@@ -18,11 +18,11 @@ class WordOfTheDay extends StatefulWidget {
 }
 
 class _WordOfTheDayState extends State<WordOfTheDay> {
-  int currentWordIndex = 0;
+  int currentWordIndex = 1;
   List data = [];
 
   Future _fetchWords() async {
-    final response = await Supabase.instance.client.from('words').select();
+    final response = await Supabase.instance.client.from('words').select().order('id');
     setState(() => data = response);
   }
 
@@ -41,7 +41,7 @@ class _WordOfTheDayState extends State<WordOfTheDay> {
           ),
       child: Container(
         margin: const EdgeInsets.all(8),
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(10),
         height: 300,
         width: double.infinity,
         decoration: BoxDecoration(

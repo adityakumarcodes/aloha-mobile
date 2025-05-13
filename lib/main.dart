@@ -9,7 +9,6 @@ import 'package:aloha_mobile/home.dart';
 import 'package:aloha_mobile/notebook.dart';
 import 'package:aloha_mobile/social.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';

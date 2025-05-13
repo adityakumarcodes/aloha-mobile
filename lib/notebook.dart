@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:aloha_mobile/home.dart';
 import 'package:aloha_mobile/icon_tile.dart';
+import 'package:aloha_mobile/uibuilder.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -33,7 +32,7 @@ class _NotebookPageState extends State<NotebookPage> {
   }
 
   Future _fetchTasks() async {
-    final response = await Supabase.instance.client.from('notes').select();
+    final response = await Supabase.instance.client.from('notes').select().order('id');
     setState(() => data = response);
   }
 
@@ -106,12 +105,12 @@ class _NotebookPageState extends State<NotebookPage> {
                         title: Text(
                           data[index]['title'],
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                             decoration:
-                                data[index]['ststus_flag'] == 'active'
+                                data[index]['status_flag'] == 'active'
                                     ? TextDecoration.lineThrough
                                     : null,
-                            decorationThickness: 3,
+                            decorationThickness: 2,
                           ),
                         ),
                         leading: const Icon(LucideIcons.asterisk),
@@ -167,14 +166,15 @@ class _NotebookPageState extends State<NotebookPage> {
                                                   ),
                                             ),
                                             const SizedBox(height: 15),
-                                            SelectableText(
-                                              jsonEncode(
-                                                data[index]['content'],
-                                              ),
-                                              style: const TextStyle(
-                                                fontSize: 25,
-                                              ),
-                                            ),
+                                            // SelectableText(
+                                            //   jsonEncode(
+                                            //     data[index]['content'],
+                                            //   ),
+                                            //   style: const TextStyle(
+                                            //     fontSize: 25,
+                                            //   ),
+                                            // ),
+                                            UIBuilder(json: data[index]['content']),
                                             const SizedBox(height: 40),
                                           ],
                                         ),
@@ -198,24 +198,7 @@ class _NotebookPageState extends State<NotebookPage> {
           ],
         ),
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () {},
-            tooltip: 'Calender',
-            heroTag: "fab1",
-            child: Icon(LucideIcons.calendarDays),
-          ),
-          SizedBox(height: 10),
-          FloatingActionButton(
-            onPressed: () => context.push('/notebook/addTask'),
-            tooltip: 'Add Task',
-            heroTag: "fab2",
-            child: Icon(LucideIcons.plus),
-          ),
-        ],
-      ),
+      floatingActionButton: NotebookFab(),
     );
   }
 
@@ -270,6 +253,34 @@ class _NotebookPageState extends State<NotebookPage> {
           ],
         );
       },
+    );
+  }
+}
+
+class NotebookFab extends StatelessWidget {
+  const NotebookFab({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        FloatingActionButton(
+          onPressed: () {},
+          tooltip: 'Calender',
+          heroTag: "fab1",
+          child: Icon(LucideIcons.calendarDays),
+        ),
+        SizedBox(height: 10),
+        FloatingActionButton.large(
+          onPressed: () => context.push('/notebook/addTask'),
+          tooltip: 'Add Task',
+          heroTag: "fab2",
+          child: Icon(LucideIcons.plus),
+        ),
+      ],
     );
   }
 }
