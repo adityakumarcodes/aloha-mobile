@@ -29,7 +29,7 @@ class _ChatDetailsState extends State<ChatDetails> {
         // leading: IconButton(
         //   onPressed: () => Navigator.pop(context),
         //   icon: const Icon(
-        //     LucideIcons.arrowLeft,
+        //     LucideIcons.chevronLeft,
         //     // color: Colors.white,
         //   ),
         //   tooltip: 'Back',
@@ -43,7 +43,7 @@ class _ChatDetailsState extends State<ChatDetails> {
               },
               child: CircleAvatar(
                 backgroundImage: AssetImage(user.imageURL),
-                maxRadius: 25,
+                maxRadius: 22,
               ),
             ),
             const SizedBox(width: 15),
@@ -60,7 +60,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                     ),
                   ),
                   if ((friendProvider.friendSelectedToChat % 3 == 0) == false)
-                    const Text("Online", style: TextStyle(fontSize: 13)),
+                    const Text("Online"),
                 ],
               ),
             ),
