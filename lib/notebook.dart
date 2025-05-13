@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:aloha_mobile/home.dart';
 import 'package:aloha_mobile/icon_tile.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +33,7 @@ class _NotebookPageState extends State<NotebookPage> {
   }
 
   Future _fetchTasks() async {
-    final response = await Supabase.instance.client.from('tasks').select();
+    final response = await Supabase.instance.client.from('notes').select();
     setState(() => data = response);
   }
 
@@ -82,7 +84,12 @@ class _NotebookPageState extends State<NotebookPage> {
               ),
             ),
             data.isEmpty
-                ? CircularProgressIndicator.adaptive()
+                ? Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                )
                 : ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -97,11 +104,11 @@ class _NotebookPageState extends State<NotebookPage> {
                       ),
                       child: ListTile(
                         title: Text(
-                          data[index]['task'],
+                          data[index]['title'],
                           style: TextStyle(
                             fontSize: 20,
                             decoration:
-                                data[index]['completed']
+                                data[index]['ststus_flag'] == 'active'
                                     ? TextDecoration.lineThrough
                                     : null,
                             decorationThickness: 3,
@@ -109,8 +116,10 @@ class _NotebookPageState extends State<NotebookPage> {
                         ),
                         leading: const Icon(LucideIcons.asterisk),
                         shape: RoundedRectangleBorder(
+                          side: BorderSide(width: 2),
                           borderRadius: BorderRadius.circular(20),
                         ),
+                        // shape: Border.all(color: Colors.black, width: 2),
                         tileColor: Colors.white,
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 5,
@@ -140,7 +149,7 @@ class _NotebookPageState extends State<NotebookPage> {
                                               size: 30,
                                             ),
                                             Text(
-                                              data[index]['task'],
+                                              data[index]['title']??'',
                                               style: const TextStyle(
                                                 fontSize: 35,
                                                 // fontWeight: FontWeight.bold,
@@ -159,7 +168,9 @@ class _NotebookPageState extends State<NotebookPage> {
                                             ),
                                             const SizedBox(height: 15),
                                             SelectableText(
-                                              data[index]['description'],
+                                              jsonEncode(
+                                                data[index]['content'],
+                                              ),
                                               style: const TextStyle(
                                                 fontSize: 25,
                                               ),

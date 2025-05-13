@@ -29,7 +29,7 @@ class IconTile extends StatelessWidget {
             Expanded(
               child: Text(
                 item.text,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: TextStyle(fontSize: 20),
                 overflow: TextOverflow.ellipsis,
               ),
             ),

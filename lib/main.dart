@@ -11,15 +11,15 @@ import 'package:aloha_mobile/social.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
-  final YOUR_SUPABASE_URL=dotenv.env['YOUR_SUPABASE_URL']??'';
-  final YOUR_SUPABASE_ANON_KEY=dotenv.env['YOUR_SUPABASE_ANON_KEY']??'';
+  final YOUR_SUPABASE_URL = dotenv.env['YOUR_SUPABASE_URL'] ?? '';
+  final YOUR_SUPABASE_ANON_KEY = dotenv.env['YOUR_SUPABASE_ANON_KEY'] ?? '';
   await Supabase.initialize(
     url: YOUR_SUPABASE_URL,
     anonKey: YOUR_SUPABASE_ANON_KEY,
@@ -74,7 +74,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Aloha',
-      theme: ThemeData(useMaterial3: true),
+      theme: ThemeData(
+        useMaterial3: true,
+        textTheme: GoogleFonts.poppinsTextTheme(),
+      ),
       routerConfig: _router,
       // home: CustomPaint(painter: CirclePainter()),
     );

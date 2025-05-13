@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -67,12 +65,15 @@ class _WordOfTheDayState extends State<WordOfTheDay> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        data[currentWordIndex]['word'],
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 32,
-                          color: Colors.white
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          data[currentWordIndex]['word'],
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 32,
+                            color: Colors.white
+                          ),
                         ),
                       ),
                       const SizedBox(height: 10),
