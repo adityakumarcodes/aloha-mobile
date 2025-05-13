@@ -19,23 +19,13 @@ class CategoryItem {
 }
 
 final List<CategoryItem> categoriesList = [
-  CategoryItem(
-    icon: LucideIcons.bookOpen,
-    text: 'Notebook',
-    route: '/notebook',
-  ),
-  CategoryItem(
-    icon: LucideIcons.messageCircleMore,
-    text: 'Chat',
-    route: '/chat',
-  ),
+  CategoryItem(icon: LucideIcons.bookOpen,text: 'Notebook',route: '/notebook'),
+  CategoryItem(icon: LucideIcons.messageCircleMore,text: 'Chat',route: '/chat'),
+  CategoryItem(icon: LucideIcons.hardDrive,text: 'My Drive',route: '/mydrive'),
   CategoryItem(icon: LucideIcons.pyramid, text: 'Social', route: '/social'),
+  CategoryItem(icon: LucideIcons.newspaper, text: 'News', route: '/news'),
   CategoryItem(icon: LucideIcons.shoppingBag, text: 'Shop', route: '/shop'),
-  CategoryItem(
-    icon: LucideIcons.hardDrive,
-    text: 'My Drive',
-    route: '/mydrive',
-  ),
+  CategoryItem(icon: LucideIcons.trash2, text: 'Trash', route: '/trash'),
   CategoryItem(icon: LucideIcons.bolt, text: 'Settings', route: '/settings'),
 ];
 
