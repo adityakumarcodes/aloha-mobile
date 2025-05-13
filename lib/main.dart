@@ -18,14 +18,15 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (!const bool.fromEnvironment('CI')) {
-    await dotenv.load(fileName: ".env");
-  String YOUR_SUPABASE_URL = dotenv.env['YOUR_SUPABASE_URL'] ?? '';
-  String YOUR_SUPABASE_ANON_KEY = dotenv.env['YOUR_SUPABASE_ANON_KEY'] ?? '';
-  }
-  
   String YOUR_SUPABASE_URL = String.fromEnvironment('YOUR_SUPABASE_URL');
   String YOUR_SUPABASE_ANON_KEY = String.fromEnvironment('YOUR_SUPABASE_ANON_KEY');
+
+  if (!const bool.fromEnvironment('CI')) {
+    await dotenv.load(fileName: ".env");
+  YOUR_SUPABASE_URL = dotenv.env['YOUR_SUPABASE_URL'] ?? '';
+  YOUR_SUPABASE_ANON_KEY = dotenv.env['YOUR_SUPABASE_ANON_KEY'] ?? '';
+  }
+  
 
   await Supabase.initialize(
     url: YOUR_SUPABASE_URL,
