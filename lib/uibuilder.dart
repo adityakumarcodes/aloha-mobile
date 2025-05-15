@@ -14,7 +14,7 @@ class ChecklistWidget extends StatelessWidget {
         return CheckboxListTile(
           value: item['meta']['checked'] ?? false,
           onChanged: null,
-          title: Text(item['content'] ?? ''),
+          title: SelectableText(item['content'] ?? ''),
           controlAffinity: ListTileControlAffinity.leading,
         );
       }).toList(),
@@ -96,7 +96,7 @@ class HeadingWidget extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Text(
+      child: SelectableText(
         text,
         style: TextStyle(
           fontSize: fontSizes[level.clamp(1, 6)]!,

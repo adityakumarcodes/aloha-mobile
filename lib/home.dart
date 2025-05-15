@@ -24,6 +24,7 @@ final List<CategoryItem> categoriesList = [
   CategoryItem(icon: LucideIcons.hardDrive,text: 'My Drive',route: '/mydrive'),
   CategoryItem(icon: LucideIcons.pyramid, text: 'Social', route: '/social'),
   CategoryItem(icon: LucideIcons.shoppingBag, text: 'Shop', route: '/shop'),
+  CategoryItem(icon: LucideIcons.calendar, text: 'Calendarjdnwjnwedjwendkjwnjnkjnk', route: '/calendar'),
   CategoryItem(icon: LucideIcons.bolt, text: 'Settings', route: '/settings'),
 ];
 
@@ -63,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.large(
         onPressed: () {},
         child: Icon(LucideIcons.search),
       ),

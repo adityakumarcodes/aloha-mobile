@@ -1,4 +1,5 @@
 import 'package:aloha_mobile/home.dart';
+import 'package:aloha_mobile/scrolling_text.dart';
 import 'package:flutter/material.dart';
 
 class IconTile extends StatelessWidget {
@@ -27,10 +28,10 @@ class IconTile extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             Expanded(
-              child: Text(
-                item.text,
-                style: TextStyle(fontSize: 18),
-                overflow: TextOverflow.ellipsis,
+              child: ScrollingTextItem(
+                 text: item.text,
+                // style: TextStyle(fontSize: 18),
+                // overflow: TextOverflow.ellipsis,
               ),
             ),
           ],

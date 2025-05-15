@@ -1,12 +1,16 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:aloha_mobile/add_task.dart';
+import 'package:aloha_mobile/calender.dart';
 import 'package:aloha_mobile/chat.dart';
 import 'package:aloha_mobile/chat_details.dart';
 import 'package:aloha_mobile/constants.dart';
 import 'package:aloha_mobile/folder_list.dart';
 import 'package:aloha_mobile/home.dart';
+import 'package:aloha_mobile/mydrive.dart';
 import 'package:aloha_mobile/notebook.dart';
+import 'package:aloha_mobile/settings.dart';
+import 'package:aloha_mobile/shop.dart';
 import 'package:aloha_mobile/social.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -60,6 +64,10 @@ final _router = GoRouter(
           ),
     ),
     GoRoute(path: '/social', builder: (context, state) => SocialPage()),
+    GoRoute(path: '/mydrive', builder: (context, state) => MyDrivePage()),
+    GoRoute(path: '/shop', builder: (context, state) => ShopPage()),
+    GoRoute(path: '/settings', builder: (context, state) => SettingsPage()),
+    GoRoute(path: '/calendar', builder: (context, state) => CalendarPage()),
   ],
 );
 

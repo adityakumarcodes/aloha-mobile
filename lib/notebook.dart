@@ -264,23 +264,11 @@ class NotebookFab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        FloatingActionButton(
-          onPressed: () {},
-          tooltip: 'Calender',
-          heroTag: "fab1",
-          child: Icon(LucideIcons.calendarDays),
-        ),
-        SizedBox(height: 10),
-        FloatingActionButton.large(
-          onPressed: () => context.push('/notebook/addTask'),
-          tooltip: 'Add Task',
-          heroTag: "fab2",
-          child: Icon(LucideIcons.plus),
-        ),
-      ],
+    return FloatingActionButton.large(
+      onPressed: () => context.push('/notebook/addTask'),
+      tooltip: 'Add Task',
+      heroTag: "fab2",
+      child: Icon(LucideIcons.plus),
     );
   }
 }
