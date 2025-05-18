@@ -1,4 +1,4 @@
-import 'package:aloha_mobile/chips.dart';
+import 'package:aloha_mobile/atoms/chips.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 

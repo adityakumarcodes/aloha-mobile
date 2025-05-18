@@ -1,6 +1,6 @@
 // ignore_for_file: unused_import
 
-import 'package:aloha_mobile/constants.dart';
+import 'package:aloha_mobile/atoms/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';

@@ -1,6 +1,6 @@
-import 'package:aloha_mobile/home.dart';
-import 'package:aloha_mobile/notebook.dart';
-import 'package:aloha_mobile/uibuilder.dart';
+import 'package:aloha_mobile/screens/home.dart';
+import 'package:aloha_mobile/screens/notebook.dart';
+import 'package:aloha_mobile/atoms/uibuilder.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';

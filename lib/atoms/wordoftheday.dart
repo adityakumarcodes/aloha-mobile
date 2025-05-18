@@ -2,16 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class WordOfTheDay extends StatefulWidget {
-  final String word;
-  final String meaning;
-  final VoidCallback onTap;
 
-  const WordOfTheDay({
-    super.key,
-    required this.word,
-    required this.meaning,
-    required this.onTap,
-  });
+  const WordOfTheDay({  super.key  });
 
   @override
   State<WordOfTheDay> createState() => _WordOfTheDayState();
@@ -48,7 +40,7 @@ class _WordOfTheDayState extends State<WordOfTheDay> {
           borderRadius: BorderRadius.circular(50),
           image: const DecorationImage(
             image: NetworkImage(
-              'https://images.unsplash.com/photo-1536147116438-62679a5e01f2?auto=format&fit=crop&q=60&w=600&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGdyZWVufGVufDB8fDB8fHww',
+              'https://images.unsplash.com/photo-1536147116438-62679a5e01f2?auto=format&fit=crop&q=50&w=600',
             ),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(

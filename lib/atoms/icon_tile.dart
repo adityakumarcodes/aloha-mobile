@@ -1,5 +1,5 @@
-import 'package:aloha_mobile/home.dart';
-import 'package:aloha_mobile/scrolling_text.dart';
+import 'package:aloha_mobile/atoms/scrolling_text.dart';
+import 'package:aloha_mobile/screens/home.dart';
 import 'package:flutter/material.dart';
 
 class IconTile extends StatelessWidget {
@@ -22,15 +22,12 @@ class IconTile extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(item.icon),
-            ),
+            Icon(item.icon),
             const SizedBox(width: 10),
             Expanded(
-              child: ScrollingTextItem(
-                 text: item.text,
-                // style: TextStyle(fontSize: 18),
+              child: ScrollingText(
+                text:item.text,
+                style: TextStyle(fontSize: 18),
                 // overflow: TextOverflow.ellipsis,
               ),
             ),

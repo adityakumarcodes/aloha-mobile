@@ -1,6 +1,6 @@
-import 'package:aloha_mobile/home.dart';
-import 'package:aloha_mobile/icon_tile.dart';
-import 'package:aloha_mobile/uibuilder.dart';
+import 'package:aloha_mobile/screens/home.dart';
+import 'package:aloha_mobile/atoms/icon_tile.dart';
+import 'package:aloha_mobile/atoms/uibuilder.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';

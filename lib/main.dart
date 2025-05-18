@@ -1,17 +1,17 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:aloha_mobile/add_task.dart';
-import 'package:aloha_mobile/calender.dart';
-import 'package:aloha_mobile/chat.dart';
-import 'package:aloha_mobile/chat_details.dart';
-import 'package:aloha_mobile/constants.dart';
-import 'package:aloha_mobile/folder_list.dart';
-import 'package:aloha_mobile/home.dart';
-import 'package:aloha_mobile/mydrive.dart';
-import 'package:aloha_mobile/notebook.dart';
-import 'package:aloha_mobile/settings.dart';
-import 'package:aloha_mobile/shop.dart';
-import 'package:aloha_mobile/social.dart';
+import 'package:aloha_mobile/screens/add_task.dart';
+import 'package:aloha_mobile/screens/calender.dart';
+import 'package:aloha_mobile/screens/chat.dart';
+import 'package:aloha_mobile/screens/chat_details.dart';
+import 'package:aloha_mobile/atoms/constants.dart';
+import 'package:aloha_mobile/atoms/folder_list.dart';
+import 'package:aloha_mobile/screens/home.dart';
+import 'package:aloha_mobile/screens/mydrive.dart';
+import 'package:aloha_mobile/screens/notebook.dart';
+import 'package:aloha_mobile/screens/settings.dart';
+import 'package:aloha_mobile/screens/shop.dart';
+import 'package:aloha_mobile/screens/social.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';

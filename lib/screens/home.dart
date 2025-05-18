@@ -1,5 +1,5 @@
-import 'package:aloha_mobile/icon_tile.dart';
-import 'package:aloha_mobile/wordoftheday.dart';
+import 'package:aloha_mobile/atoms/icon_tile.dart';
+import 'package:aloha_mobile/atoms/wordoftheday.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -25,7 +25,7 @@ final List<CategoryItem> categoriesList = [
   CategoryItem(icon: LucideIcons.pyramid, text: 'Social', route: '/social'),
   CategoryItem(icon: LucideIcons.shoppingBag, text: 'Shop', route: '/shop'),
   CategoryItem(icon: LucideIcons.calendar, text: 'Calendar', route: '/calendar'),
-  CategoryItem(icon: LucideIcons.bolt, text: 'Settings', route: '/settings'),
+  CategoryItem(icon: LucideIcons.bolt, text: 'Settings', route: '/settings')
 ];
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -37,15 +37,18 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Colors.purple.shade50,
       key: _scaffoldKey,
       // appBar: AppBar(
-        // title: Text(''),
+      //   title: Text(''),
         // centerTitle: true,
         // elevation: 2,
       // ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 30),
+      body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            WordOfTheDay(word: 'heloo', meaning: 'Ji', onTap: () {}),
+            Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: WordOfTheDay(),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GridView.count(
@@ -67,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.large(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: Icon(LucideIcons.search),
       ),
