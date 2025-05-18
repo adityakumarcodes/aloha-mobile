@@ -36,33 +36,36 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: Colors.purple.shade50,
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text('Home'),
-        centerTitle: true,
-        elevation: 2,
-      ),
-      body: Column(
-        children: [
-          WordOfTheDay(word: 'heloo', meaning: 'Ji', onTap: () {}),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GridView.count(
-              crossAxisCount: 2,
-              childAspectRatio: 3,
-              shrinkWrap: true,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              physics: const NeverScrollableScrollPhysics(),
-              children:
-                  categoriesList.map((item) {
-                    return IconTile(
-                      item: item,
-                      onTap: () => context.push(item.route),
-                    );
-                  }).toList(),
+      // appBar: AppBar(
+        // title: Text(''),
+        // centerTitle: true,
+        // elevation: 2,
+      // ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 30),
+        child: Column(
+          children: [
+            WordOfTheDay(word: 'heloo', meaning: 'Ji', onTap: () {}),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GridView.count(
+                crossAxisCount: 2,
+                childAspectRatio: 3,
+                shrinkWrap: true,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                physics: const NeverScrollableScrollPhysics(),
+                children:
+                    categoriesList.map((item) {
+                      return IconTile(
+                        item: item,
+                        onTap: () => context.push(item.route),
+                      );
+                    }).toList(),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton.large(
         onPressed: () {},

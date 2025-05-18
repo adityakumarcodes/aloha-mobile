@@ -39,6 +39,7 @@ class DelimiterWidget extends StatelessWidget {
   }
 }
 
+
 class ImageWidget extends StatelessWidget {
   final String imageUrl;
   final double borderRadius;
@@ -66,15 +67,11 @@ class ImageWidget extends StatelessWidget {
               baseColor: Colors.grey.shade300,
               highlightColor: Colors.grey.shade100,
               child: Container(
-                height: height,
-                width: double.infinity,
                 color: Colors.white,
               ),
             );
           },
           errorBuilder: (context, error, stackTrace) => Container(
-            height: height,
-            width: double.infinity,
             color: Colors.grey.shade200,
             child: const Icon(Icons.broken_image, size: 48),
           ),
