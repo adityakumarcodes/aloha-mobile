@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class WordOfTheDay extends StatefulWidget {
-
-  const WordOfTheDay({  super.key  });
+  const WordOfTheDay({super.key});
 
   @override
   State<WordOfTheDay> createState() => _WordOfTheDayState();
@@ -14,7 +13,10 @@ class _WordOfTheDayState extends State<WordOfTheDay> {
   List data = [];
 
   Future _fetchWords() async {
-    final response = await Supabase.instance.client.from('words').select().order('id',ascending:true);
+    final response = await Supabase.instance.client
+        .from('words')
+        .select()
+        .order('id', ascending: true);
     setState(() => data = response);
   }
 
@@ -54,27 +56,27 @@ class _WordOfTheDayState extends State<WordOfTheDay> {
               data.isEmpty
                   ? CircularProgressIndicator.adaptive()
                   : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start, 
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          data[currentWordIndex]['word'],
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 32,
-                            color: Colors.white
-                          ),
+                      const SizedBox(height: 65), 
+                      Text(
+                        data[currentWordIndex]['word'],
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 32,
+                          color: Colors.white,
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 8),
                       Text(
                         data[currentWordIndex]['meaning'],
                         textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 18,color: Colors.white),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
                       ),
-                      const SizedBox(height: 40),
                     ],
                   ),
         ),

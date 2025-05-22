@@ -40,6 +40,7 @@ class _FolderListState extends State<FolderList> {
         ),
         centerTitle: true,
         elevation: 2,
+        shape: Border(bottom: BorderSide(color: Colors.black, width: 2)),
         actions: [
           IconButton(
             tooltip: 'New Folder',

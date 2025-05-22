@@ -22,7 +22,10 @@ class IconTile extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(item.icon),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Icon(item.icon),
+            ),
             const SizedBox(width: 10),
             Expanded(
               child: ScrollingText(

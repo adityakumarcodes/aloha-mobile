@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: WordOfTheDay(),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(8,0,8,8),
               child: GridView.count(
                 crossAxisCount: 2,
                 childAspectRatio: 3,
@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.large(
         onPressed: () {},
         child: Icon(LucideIcons.search),
       ),
