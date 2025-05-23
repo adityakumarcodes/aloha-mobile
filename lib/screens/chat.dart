@@ -21,7 +21,7 @@ class _ChatPageState extends State<ChatPage> {
         title: Text('Chat'),
         centerTitle: true,
         elevation: 2,
-        // shape: Border(bottom: BorderSide(color: Colors.black, width: 2)),
+        shape: Border(bottom: BorderSide(color: Colors.black, width: 2)),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -38,7 +38,7 @@ class _ChatPageState extends State<ChatPage> {
                   friendProvider.setFriendSelectedToChat(index);
                   context.push('/chat/details');
                 }),
-                shape: Border(top: BorderSide(color: Colors.black, width: 2)),
+                shape: Border(bottom: BorderSide(color: Colors.black, width: 2)),
                 tileColor:
                     selectedIndex == index
                         ? Colors.grey[200]

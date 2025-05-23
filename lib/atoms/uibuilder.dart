@@ -1,4 +1,5 @@
 import 'package:any_link_preview/any_link_preview.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -61,22 +62,9 @@ class ImageWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.cover,
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) return child;
-            return Shimmer.fromColors(
-              baseColor: Colors.grey.shade300,
-              highlightColor: Colors.grey.shade100,
-              child: Container(color: Colors.white),
-            );
-          },
-          errorBuilder:
-              (context, error, stackTrace) => Container(
-                color: Colors.grey.shade200,
-                child: const Icon(Icons.broken_image, size: 48),
-              ),
+        child: CachedNetworkImage(
+          imageUrl:imageUrl,
+          fit: BoxFit.cover
         ),
       ),
     );
