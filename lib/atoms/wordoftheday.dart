@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class WordOfTheDay extends StatefulWidget {
@@ -35,13 +37,13 @@ class _WordOfTheDayState extends State<WordOfTheDay> {
           ),
       child: Container(
         margin: const EdgeInsets.all(8),
-        padding: const EdgeInsets.all(10),
-        height: 300,
+        padding: const EdgeInsets.all(6),
+        height: 280,
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           image: const DecorationImage(
-            image: NetworkImage(
+            image: CachedNetworkImageProvider(
               'https://images.unsplash.com/photo-1536147116438-62679a5e01f2?auto=format&fit=crop&q=50&w=600',
             ),
             fit: BoxFit.cover,
@@ -56,15 +58,15 @@ class _WordOfTheDayState extends State<WordOfTheDay> {
               data.isEmpty
                   ? CircularProgressIndicator.adaptive()
                   : Column(
-                    mainAxisAlignment: MainAxisAlignment.start, 
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 65), 
+                      const SizedBox(height: 30),
                       Text(
                         data[currentWordIndex]['word'],
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 32,
+                        style: GoogleFonts.dancingScript(
+                          fontSize: 40,
                           color: Colors.white,
                         ),
                       ),

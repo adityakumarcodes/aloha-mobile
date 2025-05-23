@@ -1,6 +1,9 @@
+import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ChecklistWidget extends StatelessWidget {
   final List<Map<String, dynamic>> items;
@@ -10,14 +13,15 @@ class ChecklistWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: items.map((item) {
-        return CheckboxListTile(
-          value: item['meta']['checked'] ?? false,
-          onChanged: null,
-          title: SelectableText(item['content'] ?? ''),
-          controlAffinity: ListTileControlAffinity.leading,
-        );
-      }).toList(),
+      children:
+          items.map((item) {
+            return CheckboxListTile(
+              value: item['meta']['checked'] ?? false,
+              onChanged: null,
+              title: SelectableText(item['content'] ?? ''),
+              controlAffinity: ListTileControlAffinity.leading,
+            );
+          }).toList(),
     );
   }
 }
@@ -38,7 +42,6 @@ class DelimiterWidget extends StatelessWidget {
     );
   }
 }
-
 
 class ImageWidget extends StatelessWidget {
   final String imageUrl;
@@ -66,15 +69,14 @@ class ImageWidget extends StatelessWidget {
             return Shimmer.fromColors(
               baseColor: Colors.grey.shade300,
               highlightColor: Colors.grey.shade100,
-              child: Container(
-                color: Colors.white,
-              ),
+              child: Container(color: Colors.white),
             );
           },
-          errorBuilder: (context, error, stackTrace) => Container(
-            color: Colors.grey.shade200,
-            child: const Icon(Icons.broken_image, size: 48),
-          ),
+          errorBuilder:
+              (context, error, stackTrace) => Container(
+                color: Colors.grey.shade200,
+                child: const Icon(Icons.broken_image, size: 48),
+              ),
         ),
       ),
     );
@@ -95,9 +97,7 @@ class HeadingWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: SelectableText(
         text,
-        style: TextStyle(
-          fontSize: fontSizes[level.clamp(1, 6)]!,
-        ),
+        style: GoogleFonts.bodoniModa(fontSize: fontSizes[level.clamp(1, 6)]!),
       ),
     );
   }
@@ -129,9 +129,17 @@ class RecursiveListWidget extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(ordered ? '${index + 1}.' : '•', style: const TextStyle(fontSize: 16)),
+                  Text(
+                    ordered ? '${index + 1}.' : '•',
+                    style: const TextStyle(fontSize: 16),
+                  ),
                   const SizedBox(width: 8),
-                  Expanded(child: Text(item['content'] ?? '', style: const TextStyle(fontSize: 16))),
+                  Expanded(
+                    child: Text(
+                      item['content'] ?? '',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ),
                 ],
               ),
               if (item['items'] != null && item['items'].isNotEmpty)
@@ -148,6 +156,122 @@ class RecursiveListWidget extends StatelessWidget {
   }
 }
 
+class YTPreviewWidget extends StatefulWidget {
+  final String url;
+
+  const YTPreviewWidget({super.key, required this.url});
+
+  @override
+  State<YTPreviewWidget> createState() => _YTPreviewWidgetState();
+}
+
+class _YTPreviewWidgetState extends State<YTPreviewWidget> {
+  YoutubePlayerController? _controller;
+  String? _videoId;
+  bool _isPlayerReady = false;
+
+  void _extractVideoId() {
+    final id = YoutubePlayer.convertUrlToId(widget.url);
+    if (id != null) {
+      setState(() {
+        _videoId = id;
+        _isPlayerReady = false;
+        _controller?.dispose();
+        _controller = null;
+      });
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Invalid YouTube URL')));
+    }
+  }
+
+  void _loadPlayer() {
+    if (_videoId == null) return;
+    _controller = YoutubePlayerController(
+      initialVideoId: _videoId!,
+      flags: const YoutubePlayerFlags(autoPlay: true, mute: false),
+    );
+    setState(() {
+      _isPlayerReady = true;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _extractVideoId();
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        if (_videoId != null && !_isPlayerReady)
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.network(
+                  YoutubePlayer.getThumbnail(videoId: _videoId!),
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+                IconButton(
+                  iconSize: 64,
+                  icon: const Icon(Icons.play_circle_fill, color: Colors.white),
+                  onPressed: _loadPlayer,
+                ),
+              ],
+            ),
+          ),
+        if (_controller != null && _isPlayerReady)
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: YoutubePlayer(
+              controller: _controller!,
+              showVideoProgressIndicator: true,
+              progressIndicatorColor: Colors.amber,
+              progressColors: const ProgressBarColors(
+                playedColor: Colors.amber,
+                handleColor: Colors.amberAccent,
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class LinkPreviewWidget extends StatelessWidget {
+  final String url;
+
+  const LinkPreviewWidget({super.key, required this.url});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: AnyLinkPreview(
+        link: url,
+        displayDirection: UIDirection.uiDirectionVertical,
+        titleStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        bodyStyle: const TextStyle(fontSize: 14),
+        errorBody: 'Could not load preview',
+        errorTitle: 'Invalid link',
+        errorWidget: const Icon(Icons.error),
+      ),
+    );
+  }
+}
+
 class UIBuilder extends StatelessWidget {
   final Map<String, dynamic> json;
 
@@ -157,38 +281,46 @@ class UIBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<dynamic> blocks = json['blocks'].skip(1).toList();
 
-    List<Widget> widgetList = blocks.map<Widget>((block) {
-      final type = block['type'];
-      final data = block['data'];
+    List<Widget> widgetList =
+        blocks.map<Widget>((block) {
+          final type = block['type'];
+          final data = block['data'];
 
-      switch (type) {
-        case 'header':
-          return HeadingWidget(
-            text: data['text'] ?? '',
-            level: data['level'],
-          );
-        case 'delimiter':
-          return const DelimiterWidget();
-        case 'image':
-          return ImageWidget(imageUrl: data['file']['url']);
-        case 'paragraph':
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: Text(data['text'] ?? '', style: const TextStyle(fontSize: 16)),
-          );
-        case 'list':
-          return RecursiveListWidget(
-            items: List<Map<String, dynamic>>.from(data['items']),
-            ordered: data['style'] == 'ordered',
-          );
-        case 'checklist':
-          return ChecklistWidget(
-            items: List<Map<String, dynamic>>.from(data['items']),
-          );
-        default:
-          return const SizedBox.shrink();
-      }
-    }).toList();
+          switch (type) {
+            case 'header':
+              return HeadingWidget(
+                text: data['text'] ?? '',
+                level: data['level'],
+              );
+            case 'delimiter':
+              return const DelimiterWidget();
+            case 'image':
+              return ImageWidget(imageUrl: data['file']['url']);
+            case 'paragraph':
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Text(
+                  data['text'] ?? '',
+                  style: const TextStyle(fontSize: 16),
+                ),
+              );
+            case 'list':
+              return RecursiveListWidget(
+                items: List<Map<String, dynamic>>.from(data['items']),
+                ordered: data['style'] == 'ordered',
+              );
+            case 'checklist':
+              return ChecklistWidget(
+                items: List<Map<String, dynamic>>.from(data['items']),
+              );
+            case 'embed':
+              return YTPreviewWidget(url: data['source']);
+            case 'linkTool':
+              return LinkPreviewWidget(url: data['link']);
+            default:
+              return const SizedBox.shrink();
+          }
+        }).toList();
 
     return ListView(
       shrinkWrap: true,

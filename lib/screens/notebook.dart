@@ -3,6 +3,7 @@ import 'package:aloha_mobile/atoms/icon_tile.dart';
 import 'package:aloha_mobile/atoms/uibuilder.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -32,7 +33,10 @@ class _NotebookPageState extends State<NotebookPage> {
   }
 
   Future _fetchTasks() async {
-    final response = await Supabase.instance.client.from('notes').select().order('id');
+    final response = await Supabase.instance.client
+        .from('notes')
+        .select()
+        .order('id');
     setState(() => data = response);
   }
 
@@ -149,10 +153,9 @@ class _NotebookPageState extends State<NotebookPage> {
                                               size: 30,
                                             ),
                                             Text(
-                                              data[index]['title']??'',
-                                              style: const TextStyle(
-                                                fontSize: 35,
-                                                // fontWeight: FontWeight.bold,
+                                              data[index]['title'] ?? '',
+                                              style: GoogleFonts.bodoniModa(
+                                                fontSize: 45,
                                               ),
                                               overflow: TextOverflow.visible,
                                               textAlign: TextAlign.center,
@@ -175,7 +178,9 @@ class _NotebookPageState extends State<NotebookPage> {
                                             //     fontSize: 25,
                                             //   ),
                                             // ),
-                                            UIBuilder(json: data[index]['content']),
+                                            UIBuilder(
+                                              json: data[index]['content'],
+                                            ),
                                             const SizedBox(height: 40),
                                           ],
                                         ),
@@ -259,9 +264,7 @@ class _NotebookPageState extends State<NotebookPage> {
 }
 
 class NotebookFab extends StatelessWidget {
-  const NotebookFab({
-    super.key,
-  });
+  const NotebookFab({super.key});
 
   @override
   Widget build(BuildContext context) {

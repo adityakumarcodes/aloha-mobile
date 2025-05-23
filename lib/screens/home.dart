@@ -1,4 +1,5 @@
 import 'package:aloha_mobile/atoms/icon_tile.dart';
+import 'package:aloha_mobile/atoms/uibuilder.dart';
 import 'package:aloha_mobile/atoms/wordoftheday.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -19,13 +20,29 @@ class CategoryItem {
 }
 
 final List<CategoryItem> categoriesList = [
-  CategoryItem(icon: LucideIcons.bookOpen,text: 'Notebook',route: '/notebook'),
-  CategoryItem(icon: LucideIcons.messageCircleMore,text: 'Chat',route: '/chat'),
-  CategoryItem(icon: LucideIcons.hardDrive,text: 'My Drive',route: '/mydrive'),
+  CategoryItem(
+    icon: LucideIcons.bookOpen,
+    text: 'Notebook',
+    route: '/notebook',
+  ),
+  CategoryItem(
+    icon: LucideIcons.messageCircleMore,
+    text: 'Chat',
+    route: '/chat',
+  ),
+  CategoryItem(
+    icon: LucideIcons.hardDrive,
+    text: 'My Drive',
+    route: '/mydrive',
+  ),
   CategoryItem(icon: LucideIcons.pyramid, text: 'Social', route: '/social'),
   CategoryItem(icon: LucideIcons.shoppingBag, text: 'Shop', route: '/shop'),
-  CategoryItem(icon: LucideIcons.calendar, text: 'Calendar', route: '/calendar'),
-  CategoryItem(icon: LucideIcons.bolt, text: 'Settings', route: '/settings')
+  CategoryItem(
+    icon: LucideIcons.calendar,
+    text: 'Calendar',
+    route: '/calendar',
+  ),
+  CategoryItem(icon: LucideIcons.bolt, text: 'Settings', route: '/settings'),
 ];
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -38,8 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
       key: _scaffoldKey,
       // appBar: AppBar(
       //   title: Text(''),
-        // centerTitle: true,
-        // elevation: 2,
+      // centerTitle: true,
+      // elevation: 2,
       // ),
       body: SingleChildScrollView(
         child: Column(
@@ -50,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: WordOfTheDay(),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(8,0,8,8),
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
               child: GridView.count(
                 crossAxisCount: 2,
                 childAspectRatio: 3,
@@ -77,3 +94,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
