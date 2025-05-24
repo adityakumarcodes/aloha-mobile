@@ -1,7 +1,6 @@
 import 'package:aloha_mobile/atoms/scrolling_text.dart';
 import 'package:aloha_mobile/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class IconTile extends StatelessWidget {
   final CategoryItem item;
@@ -35,7 +34,6 @@ class IconTile extends StatelessWidget {
                 // overflow: TextOverflow.ellipsis,
               ),
             ),
-            Icon(LucideIcons.ellipsisVertical)
           ],
         ),
       ),
