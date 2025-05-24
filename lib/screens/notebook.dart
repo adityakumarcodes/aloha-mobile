@@ -16,10 +16,10 @@ class NotebookPage extends StatefulWidget {
 }
 
 final List<CategoryItem> folderList = [
-  CategoryItem(icon: LucideIcons.folder, text: 'Home', route: '/home'),
-  CategoryItem(icon: LucideIcons.folder, text: 'Work', route: '/work'),
-  CategoryItem(icon: LucideIcons.folder, text: 'Code', route: '/code'),
-  CategoryItem(icon: LucideIcons.folder, text: 'Play', route: '/play'),
+  CategoryItem(icon: LucideIcons.folder, text: 'Homework', route: '/home'),
+  CategoryItem(icon: LucideIcons.folder, text: 'Classwork', route: '/work'),
+  CategoryItem(icon: LucideIcons.folder, text: 'My Learnings', route: '/play'),
+  CategoryItem(icon: LucideIcons.folder, text: 'My Life Goals', route: '/code'),
 ];
 
 class _NotebookPageState extends State<NotebookPage> {
@@ -82,7 +82,7 @@ class _NotebookPageState extends State<NotebookPage> {
                       return IconTile(
                         item: item,
                         onTap:
-                            () => context.push('/notebook/folder${item.route}'),
+                            () => context.push('/notebook/folder/${item.text.replaceAll(' ', '-')}'),
                       );
                     }).toList(),
               ),
@@ -182,6 +182,72 @@ class _NotebookPageState extends State<NotebookPage> {
                                               json: data[index]['content'],
                                             ),
                                             const SizedBox(height: 40),
+                                            Wrap(
+                                              alignment: WrapAlignment.center,
+                                              spacing: 10,
+                                              runSpacing: 10,
+                                              children: [
+                                                FilledButton.icon(
+                                                  onPressed: () {},
+                                                  label: Text('Edit'),
+                                                  icon: Icon(LucideIcons.pen),
+                                                ),
+                                                FilledButton.icon(
+                                                  onPressed:
+                                                      () => Navigator.pop(
+                                                        context,
+                                                      ),
+                                                  label: Text('Close'),
+                                                  icon: Icon(LucideIcons.x),
+                                                ),
+                                                FilledButton.icon(
+                                                  onPressed: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (
+                                                        BuildContext context,
+                                                      ) {
+                                                        return AlertDialog(
+                                                          title: Text(
+                                                            'Confirm Delete',
+                                                          ),
+                                                          content: Text(
+                                                            'Are you sure you want to delete this item?',
+                                                          ),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                  context,
+                                                                ).pop(); // Close dialog
+                                                              },
+                                                              child: Text(
+                                                                'Cancel',
+                                                              ),
+                                                            ),
+                                                            FilledButton(
+                                                              onPressed: () {
+                                                                // Perform delete logic here
+                                                                Navigator.of(
+                                                                  context,
+                                                                ).pop(); // Close dialog
+                                                              },
+                                                              child: Text(
+                                                                'Delete',
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  label: Text('Delete'),
+                                                  icon: Icon(
+                                                    LucideIcons.trash2,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ],
                                         ),
                                       ),

@@ -33,7 +33,7 @@ class _FolderListState extends State<FolderList> {
       backgroundColor: Colors.purple.shade50,
       appBar: AppBar(
         title: Text(
-          widget.folderName.toUpperCase(),
+          widget.folderName.replaceAll('-', ' '),
           style: const TextStyle(fontSize: 20),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,

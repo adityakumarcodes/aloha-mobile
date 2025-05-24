@@ -30,57 +30,60 @@ class _WordOfTheDayState extends State<WordOfTheDay> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap:
-          () => setState(
-            () => currentWordIndex = (currentWordIndex + 1) % data.length,
-          ),
-      child: Container(
-        margin: const EdgeInsets.all(8),
-        padding: const EdgeInsets.all(6),
-        height: 280,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          image: const DecorationImage(
-            image: CachedNetworkImageProvider(
-              'https://images.unsplash.com/photo-1536147116438-62679a5e01f2?auto=format&fit=crop&q=50&w=600',
+    return Padding(
+      padding: const EdgeInsets.only(top: 30),
+      child: GestureDetector(
+        onTap:
+            () => setState(
+              () => currentWordIndex = (currentWordIndex + 1) % data.length,
             ),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              Color.fromRGBO(0, 0, 0, 0.5),
-              BlendMode.darken,
+        child: Container(
+          margin: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(6),
+          height: 280,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            image: const DecorationImage(
+              image: CachedNetworkImageProvider(
+                'https://images.unsplash.com/photo-1536147116438-62679a5e01f2?auto=format&fit=crop&q=50&w=600',
+              ),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                Color.fromRGBO(0, 0, 0, 0.5),
+                BlendMode.darken,
+              ),
             ),
           ),
-        ),
-        child: Center(
-          child:
-              data.isEmpty
-                  ? CircularProgressIndicator.adaptive()
-                  : Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 30),
-                      Text(
-                        data[currentWordIndex]['word'],
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.dancingScript(
-                          fontSize: 40,
-                          color: Colors.white,
+          child: Center(
+            child:
+                data.isEmpty
+                    ? CircularProgressIndicator.adaptive()
+                    : Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 30),
+                        Text(
+                          data[currentWordIndex]['word'],
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.dancingScript(
+                            fontSize: 40,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        data[currentWordIndex]['meaning'],
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
+                        const SizedBox(height: 8),
+                        Text(
+                          data[currentWordIndex]['meaning'],
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+          ),
         ),
       ),
     );

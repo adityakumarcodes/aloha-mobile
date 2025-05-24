@@ -1,5 +1,4 @@
 import 'package:aloha_mobile/atoms/icon_tile.dart';
-import 'package:aloha_mobile/atoms/uibuilder.dart';
 import 'package:aloha_mobile/atoms/wordoftheday.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -60,28 +59,27 @@ class _MyHomePageState extends State<MyHomePage> {
       // ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            WordOfTheDay(),
             Padding(
-              padding: const EdgeInsets.only(top: 30),
-              child: WordOfTheDay(),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-              child: GridView.count(
-                crossAxisCount: 2,
-                childAspectRatio: 3,
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: GridView.builder(
                 shrinkWrap: true,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 3,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 10,
+                ),
                 physics: const NeverScrollableScrollPhysics(),
-                children:
-                    categoriesList.map((item) {
-                      return IconTile(
-                        item: item,
-                        onTap: () => context.push(item.route),
-                      );
-                    }).toList(),
+                itemCount:categoriesList.length,
+                itemBuilder: (context, index) {
+                  final item = categoriesList[index];
+                  return IconTile(
+                    item: item,
+                    onTap: () => context.push(item.route),
+                  );
+                },
               ),
             ),
           ],
@@ -94,4 +92,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
