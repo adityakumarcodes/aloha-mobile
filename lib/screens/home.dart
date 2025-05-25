@@ -35,7 +35,6 @@ final List<CategoryItem> categoriesList = [
     route: '/mydrive',
   ),
   CategoryItem(icon: LucideIcons.pyramid, text: 'Social', route: '/social'),
-  CategoryItem(icon: LucideIcons.shoppingBag, text: 'Shop', route: '/shop'),
   CategoryItem(
     icon: LucideIcons.calendar,
     text: 'Calendar',

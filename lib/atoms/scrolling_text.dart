@@ -36,11 +36,11 @@ class _ScrollingTextState extends State<ScrollingText> {
     await Future.delayed(widget.initialDelay);
 
     while (mounted) {
-      if (_scrollController.position.maxScrollExtent == 0) {
-        // No scrolling needed; check again after some time
-        await Future.delayed(const Duration(seconds: 5));
-        continue;
-      }
+      // if (_scrollController.position.maxScrollExtent == 0) {
+      //   // No scrolling needed; check again after some time
+      //   await Future.delayed(const Duration(seconds: 5));
+      //   continue;
+      // }
 
       await _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,

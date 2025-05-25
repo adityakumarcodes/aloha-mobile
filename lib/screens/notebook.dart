@@ -16,15 +16,14 @@ class NotebookPage extends StatefulWidget {
 }
 
 final List<CategoryItem> folderList = [
-  CategoryItem(icon: LucideIcons.folder, text: 'Homework', route: '/home'),
-  CategoryItem(icon: LucideIcons.folder, text: 'Classwork', route: '/work'),
-  CategoryItem(icon: LucideIcons.folder, text: 'My Learnings', route: '/play'),
-  CategoryItem(icon: LucideIcons.folder, text: 'My Life Goals', route: '/code'),
+  CategoryItem(icon: LucideIcons.folder, text: 'My Notes', route: '/home'),
+  CategoryItem(icon: LucideIcons.folder, text: 'My Skills', route: '/play'),
+  CategoryItem(icon: LucideIcons.folder, text: 'TODOS', route: '/code'),
 ];
 
 class _NotebookPageState extends State<NotebookPage> {
   final TextEditingController _folderController = TextEditingController();
-  List data = [];
+  List tasksData = [];
 
   @override
   void initState() {
@@ -33,11 +32,15 @@ class _NotebookPageState extends State<NotebookPage> {
   }
 
   Future _fetchTasks() async {
-    final response = await Supabase.instance.client
+    final response1 = await Supabase.instance.client
         .from('notes')
         .select()
+        .isFilter('category', null)
+        .eq('type', 'task')
+        .eq('status_flag', 'active')
         .order('id');
-    setState(() => data = response);
+
+    setState(() => tasksData = response1);
   }
 
   @override
@@ -82,12 +85,14 @@ class _NotebookPageState extends State<NotebookPage> {
                       return IconTile(
                         item: item,
                         onTap:
-                            () => context.push('/notebook/folder/${item.text.replaceAll(' ', '-')}'),
+                            () => context.push(
+                              '/notebook/folder/${item.text.replaceAll(' ', '-')}',
+                            ),
                       );
                     }).toList(),
               ),
             ),
-            data.isEmpty
+            tasksData.isEmpty
                 ? Center(
                   child: Padding(
                     padding: const EdgeInsets.all(20),
@@ -97,25 +102,21 @@ class _NotebookPageState extends State<NotebookPage> {
                 : ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: data.length,
-                  itemBuilder: (BuildContext context, int index) {
+                  itemCount: tasksData.length,
+                  itemBuilder: ( context,  index) {
                     return Padding(
-                      padding: const EdgeInsets.only(
-                        top: 5,
-                        bottom: 5,
-                        left: 10,
-                        right: 10,
-                      ),
+                      padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       child: ListTile(
                         title: Text(
-                          data[index]['title'],
+                          tasksData[index]['title'],
                           style: TextStyle(
                             fontSize: 18,
-                            decoration:
-                                data[index]['status_flag'] == 'active'
-                                    ? TextDecoration.lineThrough
-                                    : null,
-                            decorationThickness: 2,
+                            // decoration:
+                            //     data[index]['status_flag'] == 'active'
+                            //         ? TextDecoration.lineThrough
+                            //         : null,
+                            // decorationThickness: 2,
                           ),
                         ),
                         leading: const Icon(LucideIcons.asterisk),
@@ -153,7 +154,7 @@ class _NotebookPageState extends State<NotebookPage> {
                                               size: 30,
                                             ),
                                             Text(
-                                              data[index]['title'] ?? '',
+                                              tasksData[index]['title'] ?? '',
                                               style: GoogleFonts.bodoniModa(
                                                 fontSize: 45,
                                               ),
@@ -165,7 +166,7 @@ class _NotebookPageState extends State<NotebookPage> {
                                                   .add_jm()
                                                   .format(
                                                     DateTime.parse(
-                                                      data[index]['createdOn'],
+                                                      tasksData[index]['createdOn'],
                                                     ),
                                                   ),
                                             ),
@@ -179,7 +180,7 @@ class _NotebookPageState extends State<NotebookPage> {
                                             //   ),
                                             // ),
                                             UIBuilder(
-                                              json: data[index]['content'],
+                                              json: tasksData[index]['content'],
                                             ),
                                             const SizedBox(height: 40),
                                             Wrap(
@@ -270,7 +271,12 @@ class _NotebookPageState extends State<NotebookPage> {
           ],
         ),
       ),
-      floatingActionButton: NotebookFab(),
+      floatingActionButton: FloatingActionButton.large(
+        onPressed: () => context.push('/notebook/addTask'),
+        tooltip: 'Add Task',
+        heroTag: "fab2",
+        child: Icon(LucideIcons.plus),
+      ),
     );
   }
 
@@ -329,16 +335,3 @@ class _NotebookPageState extends State<NotebookPage> {
   }
 }
 
-class NotebookFab extends StatelessWidget {
-  const NotebookFab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton.large(
-      onPressed: () => context.push('/notebook/addTask'),
-      tooltip: 'Add Task',
-      heroTag: "fab2",
-      child: Icon(LucideIcons.plus),
-    );
-  }
-}

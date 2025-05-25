@@ -2,6 +2,8 @@ import 'package:aloha_mobile/screens/home.dart';
 import 'package:aloha_mobile/screens/notebook.dart';
 import 'package:aloha_mobile/atoms/uibuilder.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -22,6 +24,7 @@ class _FolderListState extends State<FolderList> {
     final response = await Supabase.instance.client
         .from('notes')
         .select()
+        .eq('status_flag','active')
         .like('category', widget.folderName.toLowerCase())
         .order('id');
     return List<Map<String, dynamic>>.from(response);
@@ -72,92 +75,181 @@ class _FolderListState extends State<FolderList> {
           }
 
           return ListView.builder(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            itemCount: data.length,
-            itemBuilder: (context, index) {
-              final note = data[index];
-              return Padding(
-                padding:
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: data.length,
+                  itemBuilder: ( context,  index) {
+                    return Padding(
+                      padding:
                     const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                child: ListTile(
-                  title: Text(
-                    note['title'] ?? '',
-                    style: TextStyle(
-                      fontSize: 18,
-                      decoration: note['status_flag'] == 'active'
-                          ? TextDecoration.lineThrough
-                          : null,
-                      decorationThickness: 2,
-                    ),
-                  ),
-                  leading: const Icon(LucideIcons.asterisk),
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(width: 2),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  tileColor: Colors.white,
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 5,
-                    horizontal: 15,
-                  ),
-                  onTap: () {
-                    showModalBottomSheet(
-                      clipBehavior: Clip.hardEdge,
-                      isScrollControlled: true,
-                      context: context,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(50),
-                        ),
-                      ),
-                      builder: (context) {
-                        return DraggableScrollableSheet(
-                          initialChildSize: 0.5,
-                          minChildSize: 0.2,
-                          maxChildSize: 1,
-                          expand: false,
-                          builder: (_, controller) => SingleChildScrollView(
-                            controller: controller,
-                            padding: const EdgeInsets.all(12),
-                            child: Column(
-                              children: [
-                                const Icon(
-                                  LucideIcons.chevronUp,
-                                  color: Colors.grey,
-                                  size: 30,
-                                ),
-                                Text(
-                                  note['title'] ?? '',
-                                  style: const TextStyle(fontSize: 35),
-                                  overflow: TextOverflow.visible,
-                                  textAlign: TextAlign.center,
-                                ),
-                                Text(
-                                  DateFormat.yMMMd().add_jm().format(
-                                    DateTime.parse(note['createdOn']),
-                                  ),
-                                ),
-                                const SizedBox(height: 15),
-                                // SelectableText(
-                                //   jsonEncode(note['content']),
-                                //   style: const TextStyle(fontSize: 25),
-                                // ),
-                                UIBuilder(json: data[index]['content']),
-                                const SizedBox(height: 40),
-                              ],
-                            ),
+                      child: ListTile(
+                        title: Text(
+                          data[index]['title'],
+                          style: TextStyle(
+                            fontSize: 18,
+                            // decoration:
+                            //     data[index]['status_flag'] == 'active'
+                            //         ? TextDecoration.lineThrough
+                            //         : null,
+                            // decorationThickness: 2,
                           ),
-                        );
-                      },
-                    );
-                  },
-                ),
+                        ),
+                        leading: const Icon(LucideIcons.asterisk),
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(width: 2),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        // shape: Border.all(color: Colors.black, width: 2),
+                        tileColor: Colors.white,
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 5,
+                          horizontal: 15,
+                        ),
+                        onTap: () {
+                          showModalBottomSheet(
+                            clipBehavior: Clip.hardEdge,
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (context) {
+                              return DraggableScrollableSheet(
+                                initialChildSize: 0.5,
+                                minChildSize: 0.2,
+                                maxChildSize: 1,
+                                expand: false,
+                                builder:
+                                    (_, controller) => SingleChildScrollView(
+                                      controller: controller,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(12),
+                                        child: Column(
+                                          children: [
+                                            const Icon(
+                                              LucideIcons.chevronUp,
+                                              color: Colors.grey,
+                                              size: 30,
+                                            ),
+                                            Text(
+                                              data[index]['title'] ?? '',
+                                              style: GoogleFonts.bodoniModa(
+                                                fontSize: 45,
+                                              ),
+                                              overflow: TextOverflow.visible,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            Text(
+                                              DateFormat.yMMMd()
+                                                  .add_jm()
+                                                  .format(
+                                                    DateTime.parse(
+                                                      data[index]['createdOn'],
+                                                    ),
+                                                  ),
+                                            ),
+                                            const SizedBox(height: 15),
+                                            // SelectableText(
+                                            //   jsonEncode(
+                                            //     data[index]['content'],
+                                            //   ),
+                                            //   style: const TextStyle(
+                                            //     fontSize: 25,
+                                            //   ),
+                                            // ),
+                                            UIBuilder(
+                                              json: data[index]['content'],
+                                            ),
+                                            const SizedBox(height: 40),
+                                            Wrap(
+                                              alignment: WrapAlignment.center,
+                                              spacing: 10,
+                                              runSpacing: 10,
+                                              children: [
+                                                FilledButton.icon(
+                                                  onPressed: () {},
+                                                  label: Text('Edit'),
+                                                  icon: Icon(LucideIcons.pen),
+                                                ),
+                                                FilledButton.icon(
+                                                  onPressed:
+                                                      () => Navigator.pop(
+                                                        context,
+                                                      ),
+                                                  label: Text('Close'),
+                                                  icon: Icon(LucideIcons.x),
+                                                ),
+                                                FilledButton.icon(
+                                                  onPressed: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (
+                                                        BuildContext context,
+                                                      ) {
+                                                        return AlertDialog(
+                                                          title: Text(
+                                                            'Confirm Delete',
+                                                          ),
+                                                          content: Text(
+                                                            'Are you sure you want to delete this item?',
+                                                          ),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                  context,
+                                                                ).pop(); // Close dialog
+                                                              },
+                                                              child: Text(
+                                                                'Cancel',
+                                                              ),
+                                                            ),
+                                                            FilledButton(
+                                                              onPressed: () {
+                                                                // Perform delete logic here
+                                                                Navigator.of(
+                                                                  context,
+                                                                ).pop(); // Close dialog
+                                                              },
+                                                              child: Text(
+                                                                'Delete',
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  label: Text('Delete'),
+                                                  icon: Icon(
+                                                    LucideIcons.trash2,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                              );
+                            },
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(50),
+                                topRight: Radius.circular(50),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
               );
             },
           );
         },
       ),
-      floatingActionButton: NotebookFab(),
+      floatingActionButton: FloatingActionButton.large(
+      onPressed: () => context.push('/notebook/addTask'),
+      tooltip: 'Add Task',
+      heroTag: "fab2",
+      child: Icon(LucideIcons.plus),
+    ),
     );
   }
 

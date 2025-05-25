@@ -279,6 +279,8 @@ class UIBuilder extends StatelessWidget {
                 text: data['text'] ?? '',
                 level: data['level'],
               );
+            case 'paragraph':
+              return Text(data['text'] ?? '',style: const TextStyle(fontSize: 16),);
             case 'delimiter':
               return const DelimiterWidget();
             case 'image':
