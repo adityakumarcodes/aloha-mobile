@@ -15,10 +15,10 @@ class CategoryItem {
   final String text;
   final String route;
 
-  CategoryItem({required this.icon, required this.text, required this.route});
+  const CategoryItem({required this.icon, required this.text, required this.route});
 }
 
-final List<CategoryItem> categoriesList = [
+const List<CategoryItem> categoriesList = [
   CategoryItem(
     icon: LucideIcons.bookOpen,
     text: 'Notebook',
@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.large(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: Icon(LucideIcons.search),
       ),

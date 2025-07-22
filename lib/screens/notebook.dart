@@ -52,7 +52,7 @@ class _NotebookPageState extends State<NotebookPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.purple.shade50,
+      backgroundColor: const Color.fromRGBO(243, 229, 245, 1),
       appBar: AppBar(
         title: const Text('Notebook'),
         centerTitle: true,
@@ -271,7 +271,7 @@ class _NotebookPageState extends State<NotebookPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.large(
+      floatingActionButton: FloatingActionButton(
         onPressed: () => context.push('/notebook/addTask'),
         tooltip: 'Add Task',
         heroTag: "fab2",

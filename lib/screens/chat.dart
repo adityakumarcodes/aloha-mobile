@@ -75,7 +75,7 @@ class _ChatPageState extends State<ChatPage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.large(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {},
         tooltip: 'New chat',
         child: Icon(LucideIcons.messageSquarePlus),

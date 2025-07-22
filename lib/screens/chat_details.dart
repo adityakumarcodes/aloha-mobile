@@ -276,8 +276,8 @@ class _ChatDetailsState extends State<ChatDetails> {
                   ),
                   FloatingActionButton(
                     onPressed: () {},
-                    backgroundColor: Theme.of(context).primaryColor,
-                    child: const Icon(Icons.send, color: Colors.white),
+                    // backgroundColor: Theme.of(context).primaryColor,
+                    child: const Icon(Icons.send),
                   ),
                 ],
               ),
